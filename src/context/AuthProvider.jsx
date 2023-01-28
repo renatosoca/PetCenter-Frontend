@@ -37,13 +37,53 @@ const AuthProvider = ({children}) => {
         setAuth( {} );
     };
 
+    const editProfile = async (datos) => {
+        const token = localStorage.getItem('token');
+        if ( !token ) return setLoading( false );
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${ token }`
+            }
+        };
+        try {
+            await clienteAxios.put(`/veterinarios/perfil/${datos._id}`, datos, config);
+            return { msg: 'Almacenado Correctamente', error: false }
+        } catch (error) {
+            return { msg: error.response.data.msg, error: true }
+        }
+    };
+
+    const saveNewPassword = async ( datos ) => {
+        const token = localStorage.getItem('token');
+        if ( !token ) return setLoading( false );
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${ token }`
+            }
+        };
+        
+        try {
+            const { data } = await clienteAxios.put('/veterinarios/actualizar-password', datos, config );
+            
+            return { msg: data.msg, error: false }
+        } catch (error) {
+            return { msg: error.response.data.msg, error: true };
+        }
+    };
+
     return (
         <AuthContext.Provider
             value={{
                 auth,
                 setAuth,
                 loading,
-                logout
+                logout,
+                editProfile,
+                saveNewPassword
             }}
         >
             { children }

@@ -10,6 +10,8 @@ import NewPassword from "./pages/NewPassword";
 //Rutas Protegidas
 import AdminLayout from "./layout/AdminLayout";
 import AdminPatients from "./pages/AdminPatients";
+import EditProfile from "./pages/EditProfile";
+import ChangePassword from "./pages/ChangePassword";
 
 function App() {
   return (
@@ -27,12 +29,14 @@ function App() {
 
             <Route path="/admin" element={<AdminLayout />} >
               <Route index element={<AdminPatients />} />
+              <Route path="/admin/perfil" element={<EditProfile />} />
+              <Route path="/admin/cambiar-clave" element={<ChangePassword />} />
             </Route>
           </Routes>
         </PatientsProvider>
       </AuthProvider>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

@@ -57,7 +57,7 @@ const ForgotPassword = () => {
               type="submit"
               value='Enivar Instrucciones'
               className="w-full border py-3 mt-3 bg-indigo-700 rounded-xl text-white uppercase font-bold cursor-pointer hover:bg-indigo-800" 
-            />
+           />
         </form>
 
         <nav className='mt-10 lg:flex lg:justify-between' >
