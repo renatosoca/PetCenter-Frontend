@@ -25,7 +25,7 @@ const Register = () => {
     } catch (error) {
       setObjAlert( { msg: error.response.data.msg, error: true } );
     }
-  }
+  };
 
   const { msg } = objAlert;
 
@@ -126,7 +126,7 @@ const Register = () => {
         </nav>
       </div>
     </>
-  )
+  );
 }
 
 export default Register

@@ -75,7 +75,7 @@ const ForgotPassword = () => {
         </nav>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ForgotPassword
+export default ForgotPassword;

@@ -113,7 +113,7 @@ const NewPassword = () => {
         }
       </div>
     </>
-  )
-}
+  );
+};
 
-export default NewPassword
+export default NewPassword;

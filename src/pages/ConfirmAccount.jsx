@@ -26,7 +26,7 @@ const ConfirmAccount = () => {
       setLoading(false);
     }
     confirmaccount();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -47,7 +47,7 @@ const ConfirmAccount = () => {
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ConfirmAccount
+export default ConfirmAccount;
