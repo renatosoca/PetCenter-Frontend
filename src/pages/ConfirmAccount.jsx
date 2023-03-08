@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import clienteAxios from '../config/axios';
+import {petCenterApi} from '../api';
 import Alert from '../components/Alert';
 
 const ConfirmAccount = () => {
@@ -15,7 +15,7 @@ const ConfirmAccount = () => {
   useEffect( () => {
     const confirmaccount = async () => {
       try {
-        const { data } = await clienteAxios(`/veterinarios/confirmar/${id}`);
+        const { data } = await petCenterApi(`/veterinarios/confirmar/${id}`);
         
         setAccountConfirm(true);
         setAlert( { msg: data.msg, error: false } )

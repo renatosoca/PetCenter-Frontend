@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import AdminNav from '../components/AdminNav'
-import useAuth from '../hooks/useAuth'
+import { useForm, useAuth } from '../hooks';
 import Alert from '../components/Alert';
 
 const EditProfile = () => {

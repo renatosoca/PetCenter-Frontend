@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from 'react';
-import clienteAxios from '../config/axios';
-import useAuth from '../hooks/useAuth';
+import {petCenterApi} from '../api';
+import { useForm, useAuth } from '../hooks';
 
 const PatientsContext = createContext();
 
@@ -10,7 +10,7 @@ const PatientsProvider = ({children}) => {
 
     const { auth } = useAuth();
 
-    useEffect( () => {
+    /* useEffect( () => {
         const getPatients = async () => {
             try {
                 const token = localStorage.getItem('token');
@@ -22,14 +22,14 @@ const PatientsProvider = ({children}) => {
                         Authorization: `Bearer ${ token }`
                     }
                 };
-                const { data } = await clienteAxios( '/pacientes', config )
+                const { data } = await petCenterApi( '/pacientes', config )
                 setPatients(data);
             } catch (error) {
                 console.error(error);
             };
         };
         getPatients();
-    }, [auth]);
+    }, [auth]); */
 
     const savePatient = async ( patient ) => {
         const token = localStorage.getItem('token');
@@ -43,7 +43,7 @@ const PatientsProvider = ({children}) => {
         if ( patient.id ) {
             //Editar
             try {
-                const { data } = await clienteAxios.put(`/pacientes/${patient.id}`, patient, config );
+                const { data } = await petCenterApi.put(`/pacientes/${patient.id}`, patient, config );
                 
                 const UpdatePatients = patients.map( patientStated => patientStated._id === data._id ? data : patientStated );
                 setPatients( UpdatePatients );
@@ -53,7 +53,7 @@ const PatientsProvider = ({children}) => {
         } else {
             //Crear
             try {
-                const { data } = await clienteAxios.post('/pacientes', patient, config );
+                const { data } = await petCenterApi.post('/pacientes', patient, config );
                 const { createdAt, updatedAt, __v, ...storedPatient } = data;
                 
                 setPatients( [storedPatient, ...patients] )
@@ -79,7 +79,7 @@ const PatientsProvider = ({children}) => {
                     }
                 };
 
-                const { data } = await clienteAxios.delete( `/pacientes/${patient._id}`, config );
+                const { data } = await petCenterApi.delete( `/pacientes/${patient._id}`, config );
                 const UpdatePatients = patients.filter( patientStated => patientStated._id !== patient._id );
 
                 setPatients( UpdatePatients );

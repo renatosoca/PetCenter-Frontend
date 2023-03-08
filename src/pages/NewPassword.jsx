@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Alert from '../components/Alert';
-import clienteAxios from '../config/axios';
+import {petCenterApi} from '../api';
 
 const NewPassword = () => {
   const [ password, setPassword ] = useState('');
@@ -17,7 +17,7 @@ const NewPassword = () => {
   useEffect( () => {
     const checkToken = async () => {
       try {
-        await clienteAxios( `/veterinarios/olvide-password/${token}` );
+        await petCenterApi( `/veterinarios/olvide-password/${token}` );
         setObjAlert( { msg: 'Coloca tu Nueva Contraseña', error: false } );
         setTokenValid( true );
       } catch (error) {
@@ -36,7 +36,7 @@ const NewPassword = () => {
 
     try {
       const url = `/veterinarios/olvide-password/${token}`;
-      const { data } = await clienteAxios.post( url, { password } );
+      const { data } = await petCenterApi.post( url, { password } );
 
       setObjAlert( { msg: data.msg, error:false } );
 

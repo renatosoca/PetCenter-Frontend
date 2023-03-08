@@ -6,3 +6,9 @@
     max-width: 100%;
     width: 95%;
 }
+
+.bg-image-gradient{
+    background: linear-gradient(90deg, rgba(31,32,35,1) 0%, rgba(31,32,35,1) 2%, rgba(31,32,35,1) 4%, rgba(31,32,35,1) 7%, rgba(31,32,35,1) 9%, rgba(28,54,56,0) 100%), url(./dog_cat.jpg) no-repeat top center;
+    background-size: cover;
+    opacity: .8;
+}

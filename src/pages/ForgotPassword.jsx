@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import clienteAxios from '../config/axios';
 import Alert from '../components/Alert';
+import {petCenterApi} from '../api';
 
 const ForgotPassword = () => {
   const [ email, setEmail ] = useState('');
@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     setObjAlert( {} );
 
     try {
-      const { data } = await clienteAxios.post( '/veterinarios/olvide-password', { email } );
+      const { data } = await petCenterApi.post( '/veterinarios/olvide-password', { email } );
       setObjAlert( { msg: data.msg, error: false } );
     } catch (error) {
       setObjAlert( { msg: error.response.data.msg, error: true } );
