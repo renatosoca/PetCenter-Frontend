@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: types.onChecking });
 
       const { data } = await petCenterApi.post( "/auth/register", { name, lastname, email, password, phone } );
+      //Falta quitar el loading
       console.log(data);
     } catch (error) {
       dispatch({ type: types.onLogout, payload: error.response.data.msg });

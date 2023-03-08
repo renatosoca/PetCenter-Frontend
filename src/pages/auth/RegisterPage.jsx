@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useForm } from '../../hooks';
+import { LoadingSpinner, WarningMessage } from '../../components';
+import { useForm, useRegister } from '../../hooks';
 
 const initialForm = {
   name: '',
@@ -13,34 +13,27 @@ const initialForm = {
 }
 
 export const RegisterPage = () => {
+
+  const formValitadions = {
+    name: [ (name) => name.length > 0, 'El nombre es obligatorio.' ],
+    lastname: [ (lastname) => lastname.length > 0, 'El apellido es obligatorio.' ],
+    email: [ (email) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(email), 'Tiene que ser un email válido.' ],
+    phone: [ (phone) => phone.length > 8, 'La telefono debe contener un mínimo de 9 caracteres.' ],
+    password: [ (password) => password.length > 7, 'La contraseña debe contener un mínimo de 8 caracteres.' ],
+    repeatPassword: [ (repeatPassword, password) => repeatPassword !== password > 7, 'Las contraseñas no coinciden.' ],
+  }
   
-  const { formState, name, lastname, phone, email, password, repeatPassword, onInputChange, isFormValid, nameValid, lastnameValid, emailValid, phoneValid, passwordValid, repeatPasswordValid } = useForm( initialForm );
+  const { formState, name, lastname, phone, email, password, repeatPassword, onInputChange, isFormValid, nameValid, lastnameValid, emailValid, phoneValid, passwordValid, repeatPasswordValid } = useForm( initialForm, formValitadions );
 
-  const [ isFormSubmit, setIsFormSubmit ] = useState( false );
-
-  const handleSubmitRegister = async (e) => {
-    e.preventDefault();
-
-   /*  if ( [nombre, email, password, repeatPassword].includes('')) return setObjAlert( { msg: 'Todos los Campos son Obligatorios', error: true} );
-    if (password !== repeatPassword) return setObjAlert( { msg: 'Las Contraseñas no Coinciden', error: true} );
-    if (password.length < 6 ) return setObjAlert( { msg: 'La contraseña tiene que tener un mínimo de 6 caracteres', error: true} );
-
-    setObjAlert( {} );
-    //Crear el usuario en la API
-    try {
-      await petCenterApi.post( '/veterinarios', {nombre,email,password});
-      setObjAlert( { msg:'Registrado Correctamente, revisa tu Correo', error: false} )
-    } catch (error) {
-      setObjAlert( { msg: error.response.data.msg, error: true } );
-    } */
-  };
+  const { status, errorMessage, isFormSubmit, handleSubmitRegister } = useRegister( formState, isFormValid );
 
   return (
     <>
-      <div className='hidden xl:block h-full bg-image-gradient overflow-auto'>
+      <div className='hidden xl:block h-full overflow-hidden'>
+        <div className='bg-image-gradient-rigth h-full'></div>
       </div>
 
-      <div className='w-full overflow-y-scroll'>
+      <div className='w-full overflow-y-scroll scrollbar-hidden'>
         <div className='px-5 py-10 max-w-xl w-full mx-auto'>
           <div >
             <h1 className='uppercase text-center italic font-bold text-6xl text-white'>Registro</h1>
@@ -48,10 +41,10 @@ export const RegisterPage = () => {
 
           <form 
             onSubmit={ handleSubmitRegister }
-            className='w-full py-16 flex flex-col gap-4 text-white relative'
+            className='w-full py-10 flex flex-col gap-4 text-white relative'
           >
             <div className='flex gap-6'>
-              <div className="">
+              <div className="flex-1">
                 <label 
                   htmlFor="name"
                   className=' text-xs'
@@ -71,7 +64,7 @@ export const RegisterPage = () => {
                 <span className='text-red-500'>{ isFormSubmit && nameValid }</span>
               </div>
 
-              <div className="">
+              <div className="flex-1">
                 <label 
                   htmlFor="lastname"
                   className=' text-xs'
@@ -171,7 +164,7 @@ export const RegisterPage = () => {
               <span className='text-red-500'>{ isFormSubmit && repeatPasswordValid }</span>
             </div>
 
-            { /* errorMessage && <WarningMessage messageError={ errorMessage } /> */ }
+            { errorMessage && <WarningMessage messageError={ errorMessage } /> }
 
             <button
               type="submit"
@@ -183,10 +176,10 @@ export const RegisterPage = () => {
 
           <nav className='lg:flex lg:justify-between' >
             <Link 
-              to="/registro" 
+              to="/" 
               className='font-bold block text-center my-5 text-gray-500'
             >
-              ¿No tienes una cuenta?<span className='text-[#00FFF6]'> Regístrate</span>
+              ¿Ya tienes una cuenta?<span className='text-[#00FFF6]'> Inicia sesión</span>
             </Link>
 
             <Link 

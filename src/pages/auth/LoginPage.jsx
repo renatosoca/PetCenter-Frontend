@@ -92,7 +92,7 @@ export const LoginPage = () => {
         </nav>
       </div>
 
-      <div className='hidden xl:block h-full bg-image-gradient'>
+      <div className='hidden xl:block h-full bg-image-gradient-left'>
       </div>
     </>
   );

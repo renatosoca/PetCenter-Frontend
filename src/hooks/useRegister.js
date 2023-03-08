@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
+import { AuthContext } from "../context";
 
+export const useRegister = ( formState, isFormValid ) => {
 
-export const useRegister = ( formState, isFormValid, onResetForm ) => {
   const { startRegister, status, errorMessage } = useContext(AuthContext);
   const [ isFormSubmit, setIsFormSubmit ] = useState(false);
 
@@ -13,7 +14,6 @@ export const useRegister = ( formState, isFormValid, onResetForm ) => {
 
     startRegister( formState );
     setIsFormSubmit(false);
-    onResetForm();
   };
 
   return {
