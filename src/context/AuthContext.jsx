@@ -10,7 +10,7 @@ const initialState = {
   status: "init",
   user: {},
   errorMessage: null,
-  errorSuccess: null,
+  successMessage: null,
   errorSystem: null,
 };
 
@@ -45,8 +45,8 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: types.onChecking });
 
       const { data } = await petCenterApi.post( "/auth/register", { name, lastname, email, password, phone } );
-      //Falta quitar el loading
-      console.log(data);
+      dispatch({ type: types.onRegister, payload: data.msg });
+
     } catch (error) {
       dispatch({ type: types.onLogout, payload: error.response.data.msg });
     }
@@ -65,13 +65,63 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: types.onLogin, payload: { _id, name, lastname, email, phone } });
 
     } catch (error) {
-        console.log(error.response.data.msg)
       dispatch({ type: types.onSystem, payload: error.response.data.msg });
     }
   }
 
   const startClearMessageError = () => {
     dispatch({ type: types.onclearMessageError });
+  }
+
+  const startClearMessageSuccess = () => {
+    dispatch({ type: types.onClearSuccessMessage });
+  }
+
+  const startConfirmAccount = async (token) => {
+    try {
+      dispatch({ type: types.onChecking });
+
+      const { data } = await petCenterApi.get( `/auth/confirm/${token}` );
+      dispatch({ type: types.onRegister, payload: data.msg });
+      console.log(data.msg);
+
+    } catch (error) {
+      dispatch({ type: types.onLogout, payload: error.response.data.msg });
+    }
+  }
+
+  const startForgotPassword = async ({ email }) => {
+    try {
+      dispatch({ type: types.onChecking });
+
+      const { data } = await petCenterApi.post( "/auth/forgot-password", { email } );
+      console.log(data.msg);
+      dispatch({ type: types.onForgotPassword, payload: data.msg });
+
+    } catch (error) {
+      dispatch({ type: types.onLogout, payload: error.response.data.msg });
+    }
+  }
+
+  const startValidateToken = async ( token ) => {
+    try {
+      const { data } = await petCenterApi.get( `/auth/reset-password/${token}` );
+      console.log(data);
+    } catch (error) {
+      dispatch({ type: types.onLogout, payload: error.response.data.msg });
+    }
+  }
+
+  const startResetPassword = async ({ token, password }) => {
+    try {
+      dispatch({ type: types.onChecking });
+
+      const { data } = await petCenterApi.post( `/auth/reset-password/${token}`, { password } );
+      dispatch({ type: types.onRegister, payload: data.msg });
+
+    } catch (error) {
+      dispatch({ type: types.onLogout, payload: error.response.data.msg });
+    }
   }
 
   /* useEffect(() => {
@@ -155,6 +205,11 @@ export const AuthProvider = ({ children }) => {
       startRegister,
       startChecking,
       startClearMessageError,
+      startClearMessageSuccess,
+      startConfirmAccount,
+      startForgotPassword,
+      startValidateToken,
+      startResetPassword,
     }} >
       {children}
     </AuthContext.Provider>

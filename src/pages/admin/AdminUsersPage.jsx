@@ -3,7 +3,7 @@ import AdminNav from '../../components/AdminNav'
 import { useForm, useAuth } from '../../hooks';
 import Alert from '../../components/Alert';
 
-const EditProfile = () => {
+export const AdminUsersPage = () => {
     const { auth, editProfile } = useAuth();
 
     const [ profile, setProfile ] = useState({});
@@ -124,6 +124,4 @@ const EditProfile = () => {
             </div>
         </>
     );
-};
-
-export default EditProfile;
+}

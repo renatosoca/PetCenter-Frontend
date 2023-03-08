@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Form from "../../components/Form";
 import PatientList from "../../components/PatientList";
 
-const AdminPatients = () => {
+export const AdminHomePage = () => {
   const [ showForm, setShowForm ] = useState(false);
 
   return (
@@ -25,5 +25,3 @@ const AdminPatients = () => {
     </div>
   )
 }
-
-export default AdminPatients

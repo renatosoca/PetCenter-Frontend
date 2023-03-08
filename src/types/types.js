@@ -2,7 +2,11 @@ export const types = {
   onChecking: '[auth] Checking',
   onLogin: '[auth] Login',
   onLogout: '[auth] Logout',
-  onclearMessageError: '[auth] Clear Message Error',
+  onRegister: '[auth] Register',
+  onclearMessageError: '[auth] Clear Error Message',
   onRegister: '[auth] Register',
   onSystem: '[auth] System',
+  onClearSuccessMessage: '[auth] Clear Success Message',
+  onConfirmAccount: '[auth] Confirm Account',
+  onForgotPassword: '[auth] Forgot Password',
 }

@@ -1,15 +1,13 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useForm, useForgotPassword } from '../../hooks';
-import { LoadingSpinner, WarningMessage } from '../../components';
+import { LoadingSpinner, SuccessMessage, WarningMessage } from '../../components';
 
 const initialForm = {
   email: '',
 }
 
 export const ForgotPassPage = () => {
-
   const formValitadions = {
     email: [ (email) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(email), 'Tiene que ser un email válido.' ],
   }
@@ -19,7 +17,7 @@ export const ForgotPassPage = () => {
   } = useForm( initialForm, formValitadions );
 
   const { 
-    status, errorMessage, isFormSubmit, handleSubmit 
+    status, errorMessage, successMessage, isFormSubmit, handleSubmit 
   } = useForgotPassword( formState, isFormValid, onResetForm );
 
   return (
@@ -36,6 +34,8 @@ export const ForgotPassPage = () => {
           onSubmit={ handleSubmit }
           className='w-full py-16 flex flex-col gap-7 text-white relative'
         >
+          { !!successMessage && <SuccessMessage messageSuccess={ successMessage } /> }
+
           <div className="">
             <label 
               htmlFor="email"
@@ -57,26 +57,37 @@ export const ForgotPassPage = () => {
 
           <button
             type="submit"
-            className="w-full p-3 bg-[#00FFF6] rounded-[.2rem] font-bold mt-4 text-black flex items-center justify-center"
+            className="w-full p-3 bg-green-400 rounded-[.2rem] font-bold mt-4 text-black flex items-center justify-center"
+            disabled={ ( status === 'loading' ) }
           >
-            { status === 'loading' ? <LoadingSpinner /> : 'Iniciar Sesión' }
+            { ( status === 'loading' ) ? <LoadingSpinner /> : 'Iniciar Sesión' }
           </button>
         </form>
 
         <nav className='lg:flex lg:justify-between' >
-          <Link 
+          <span
+            className='font-bold block text-center my-5 text-gray-500'
+          >
+            ¿Ya tienes una cuenta? {''}
+            <Link 
             to="/auth" 
+            className={`text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' } `}
+            > 
+              Inicia sesión
+            </Link>
+          </span>
+          
+          <span
             className='font-bold block text-center my-5 text-gray-500'
           >
-            ¿Ya tienes una cuenta?<span className='text-[#00FFF6]'> Inicia Sesión</span>
-          </Link>
-
-          <Link 
+            ¿No tienes una cuenta? {''}
+            <Link 
             to="/auth/register" 
-            className='font-bold block text-center my-5 text-gray-500'
-          >
-            ¿No tienes una cuenta?<span className='text-[#00FFF6]'> Regístrate</span>
-          </Link>
+            className={`text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' } `}
+            > 
+              Regístrate
+            </Link>
+          </span>
         </nav>
       </div>
     </>

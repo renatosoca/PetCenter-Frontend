@@ -3,7 +3,7 @@ import { AuthContext } from "../context";
 
 export const useRegister = ( formState, isFormValid ) => {
 
-  const { startRegister, status, errorMessage } = useContext(AuthContext);
+  const { startRegister, status, errorMessage, successMessage } = useContext(AuthContext);
   const [ isFormSubmit, setIsFormSubmit ] = useState(false);
 
   const handleSubmitRegister = (e) => {
@@ -19,6 +19,7 @@ export const useRegister = ( formState, isFormValid ) => {
   return {
     status,
     errorMessage,
+    successMessage,
     isFormSubmit,
 
     handleSubmitRegister,

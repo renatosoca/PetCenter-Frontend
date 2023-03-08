@@ -19,6 +19,8 @@ export const LoginPage = () => {
 
   const { handleSubmitLogin, status, errorMessage, isFormSubmit } = useLogin( formState, isFormValid, onResetForm );
 
+  if ( status === 'init' ) return 'Cargando...';
+
   return (
     <>
       <div className='px-5 py-10 max-w-xl w-full mx-auto'>
@@ -66,27 +68,33 @@ export const LoginPage = () => {
             <span className='text-red-500'>{ isFormSubmit && passwordValid }</span>
           </div>
 
-          { errorMessage && <WarningMessage messageError={ errorMessage } /> }
+          { !!errorMessage && <WarningMessage messageError={ errorMessage } /> }
 
           <button
             type="submit"
-            className="w-full p-3 bg-[#00FFF6] rounded-[.2rem] font-bold mt-4 text-black flex items-center justify-center"
+            className="w-full p-3 bg-green-400 rounded-[.2rem] font-bold mt-4 text-black flex items-center justify-center hover:text-white transition-colors"
+            disabled={ ( status === 'loading' ) }
           >
             { status === 'loading' ? <LoadingSpinner /> : 'Iniciar Sesión' }
           </button>
         </form>
 
         <nav className='lg:flex lg:justify-between' >
-          <Link 
-            to="/auth/register" 
+          <span
             className='font-bold block text-center my-5 text-gray-500'
           >
-            ¿No tienes una cuenta?<span className='text-[#00FFF6]'> Regístrate</span>
-          </Link>
+            ¿No tienes una cuenta? {''}
+            <Link 
+            to="/auth/register" 
+            className={`text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' } `}
+            > 
+              Regístrate
+            </Link>
+          </span>
 
           <Link 
             to="/auth/forgot-password" 
-            className='font-bold block text-center my-5 text-[#00FFF6]'>
+            className={`font-bold block text-center my-5 text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' }`}>
             Olvidé mi contraseña
           </Link>
         </nav>

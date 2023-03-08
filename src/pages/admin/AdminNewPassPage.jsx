@@ -3,7 +3,7 @@ import { useForm, useAuth } from '../../hooks';
 import AdminNav from "../../components/AdminNav"
 import Alert from "../../components/Alert";
 
-const ChangePassword = () => {
+export const AdminNewPassPage = () => {
     const [ password, setPassword ] = useState({ currentPassword: '', newPassword: '' });
     const [ objAlert, setObjAlert ] = useState({});
 
@@ -70,6 +70,4 @@ const ChangePassword = () => {
             </div>
         </>
     );
-};
-
-export default ChangePassword;
+}

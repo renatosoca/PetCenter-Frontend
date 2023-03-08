@@ -11,11 +11,11 @@ export const WarningMessage = ({ messageError }) => {
   }
 
   return (
-    <div className='absolute top-full w-full flex items-center justify-center'>
-      <div className="relative max-w-xs min-h-[4rem] bg-[#2E2F36] text-white px-14 py-6 border-l-8 border-red-500 rounded-lg">
-        <MdOutlineError className='absolute left-3 top-5 text-red-500 text-[1.4rem]' />
+    <div className='absolute top-[95%] w-full flex items-center justify-center'>
+      <div className="relative max-w-xs bg-red-400 text-white px-14 py-6 border-l-8 border-red-600 rounded-lg">
+        <MdOutlineError className='absolute left-3 top-5 text-red-600 text-[1.4rem]' />
 
-        <p className="text-sm">{ messageError }</p>
+        <span className="min-h-min text-sm font-bold">{ messageError }</span>
 
         <button
           type='button'

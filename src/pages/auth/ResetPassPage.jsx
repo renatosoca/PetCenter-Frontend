@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Alert from '../../components/Alert';
-import {petCenterApi} from '../../api';
-import { useForm, useNewPassword } from '../../hooks';
+import { useForm, useResetPassword } from '../../hooks';
 import { LoadingSpinner, WarningMessage } from '../../components';
 
 const initialForm = {
@@ -15,31 +13,21 @@ export const ResetPassPage = () => {
 
   const formValitadions = {
     password: [ (password) => password.length > 7, 'La contraseña debe contener un mínimo de 8 caracteres.' ],
-    repeatPassword: [ (repeatPassword, password) => repeatPassword !== password, 'Las contraseñas no coinciden' ],
+    repeatPassword: [ (repeatPassword, password) => repeatPassword === password, 'Las contraseñas no coinciden' ],
   }
+  
+  const params = useParams();
+  const { token } = params;
   
   const { 
     formState, password, repeatPassword, isFormValid, passwordValid, repeatPasswordValid, onInputChange, onResetForm 
   } = useForm( initialForm, formValitadions );
 
-  const { status, errorMessage, isFormSubmit, handleSubmit } = useNewPassword( formState, isFormValid, onResetForm );
+  const { 
+    status, errorMessage, isFormSubmit, handleSubmit, startValidateToken 
+  } = useResetPassword( formState, isFormValid, token, onResetForm );
   
-  const params = useParams();
-  const { token } = params;
-
-  /* useEffect( () => {
-    const checkToken = async () => {
-      try {
-        await petCenterApi( `/veterinarios/olvide-password/${token}` );
-        setObjAlert( { msg: 'Coloca tu Nueva Contraseña', error: false } );
-        setTokenValid( true );
-      } catch (error) {
-        setObjAlert( { msg: 'Hubo un Error con el enlace', error: true} )
-      }
-    };
-    checkToken();
-  }, []);
-
+/* 
   const handleSubmitNewPassword = async e => {
     e.preventDefault();
     if ( !password ) return setObjAlert( { msg: 'La contraseña es Obligatorio', error: true });
@@ -117,19 +105,25 @@ export const ResetPassPage = () => {
 
             <button
               type="submit"
-              className="w-full p-3 bg-[#00FFF6] rounded-[.2rem] font-bold mt-4 text-black flex items-center justify-center"
+              className="w-full p-3 bg-green-400 rounded-[.2rem] font-bold mt-4 text-black flex items-center justify-center"
+              disabled={ ( status === 'loading' ) }
             >
               { status === 'loading' ? <LoadingSpinner /> : 'Crear Cuenta' }
             </button>
           </form>
 
           <nav className='lg:flex lg:justify-between' >
-            <Link 
-              to="/auth" 
+            <span
               className='font-bold block text-center my-5 text-gray-500'
             >
-              ¿Ya tienes una cuenta?<span className='text-[#00FFF6]'> Inicia sesión</span>
-            </Link>
+              ¿Ya tienes una cuenta? {''}
+              <Link 
+              to="/auth" 
+              className={`text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' } `}
+              > 
+                Inicia sesión
+              </Link>
+            </span>
           </nav>
         </div>
       </div>

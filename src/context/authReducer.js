@@ -31,6 +31,28 @@ export const authReducer = ( state = {}, { type, payload } ) => {
         errorMessage: payload,
       }
 
+    case types.onRegister:
+      return {
+        ...state,
+        status: 'not-uthenticated',
+        successMessage: payload,
+        errorMessage: null,
+      }
+    
+    case types.onClearSuccessMessage:
+      return {
+        ...state,
+        successMessage: null,
+      }
+
+    case types.onForgotPassword:
+      return {
+        ...state,
+        status: 'not-uthenticated',
+        successMessage: payload,
+        errorMessage: null,
+      }
+
     case types.onSystem:
       return {
         ...state,

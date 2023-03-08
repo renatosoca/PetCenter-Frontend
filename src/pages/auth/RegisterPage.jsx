@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { LoadingSpinner, WarningMessage } from '../../components';
+import { LoadingSpinner, SuccessMessage, WarningMessage } from '../../components';
 import { useForm, useRegister } from '../../hooks';
 
 const initialForm = {
@@ -23,9 +23,11 @@ export const RegisterPage = () => {
     repeatPassword: [ (repeatPassword, password) => repeatPassword !== password > 7, 'Las contraseñas no coinciden.' ],
   }
   
-  const { formState, name, lastname, phone, email, password, repeatPassword, onInputChange, isFormValid, nameValid, lastnameValid, emailValid, phoneValid, passwordValid, repeatPasswordValid } = useForm( initialForm, formValitadions );
+  const { 
+    formState, name, lastname, phone, email, password, repeatPassword, onInputChange, isFormValid, nameValid, lastnameValid, emailValid, phoneValid, passwordValid, repeatPasswordValid 
+  } = useForm( initialForm, formValitadions );
 
-  const { status, errorMessage, isFormSubmit, handleSubmitRegister } = useRegister( formState, isFormValid );
+  const { status, errorMessage, isFormSubmit, successMessage, handleSubmitRegister } = useRegister( formState, isFormValid );
 
   return (
     <>
@@ -43,6 +45,8 @@ export const RegisterPage = () => {
             onSubmit={ handleSubmitRegister }
             className='w-full py-10 flex flex-col gap-4 text-white relative'
           >
+            { !!successMessage && <SuccessMessage messageSuccess={ successMessage } /> }
+
             <div className='flex gap-6'>
               <div className="flex-1">
                 <label 
@@ -168,23 +172,29 @@ export const RegisterPage = () => {
 
             <button
               type="submit"
-              className="w-full p-3 bg-[#00FFF6] rounded-[.2rem] font-bold mt-4 text-black flex items-center justify-center"
+              className="w-full p-3 bg-green-400 rounded-[.2rem] font-bold mt-4 text-black flex items-center justify-center hover:text-white transition-colors"
+              disabled={ ( status === 'loading' ) }
             >
               { status === 'loading' ? <LoadingSpinner /> : 'Crear Cuenta' }
             </button>
           </form>
 
           <nav className='lg:flex lg:justify-between' >
-            <Link 
-              to="/auth" 
+            <span
               className='font-bold block text-center my-5 text-gray-500'
             >
-              ¿Ya tienes una cuenta?<span className='text-[#00FFF6]'> Inicia sesión</span>
-            </Link>
+             ¿Ya tienes una cuenta? {''}
+              <Link 
+              to="/auth" 
+              className={`text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' } `}
+              > 
+                Inicia sesión
+              </Link>
+            </span>
 
             <Link 
               to="/auth/forgot-password" 
-              className='font-bold block text-center my-5 text-[#00FFF6]'>
+              className={`font-bold block text-center my-5 text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' }`}>
               Olvidé mi contraseña
             </Link>
           </nav>
