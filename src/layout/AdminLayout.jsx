@@ -3,7 +3,7 @@ import { useForm, useAuth } from '../hooks';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const AdminLayout = () => {
+export const AdminLayout = () => {
     const { auth, loading } = useAuth();
 
     if ( loading ) return 'Cargando...';
@@ -21,5 +21,3 @@ const AdminLayout = () => {
         </>
     );
 };
-
-export default AdminLayout;

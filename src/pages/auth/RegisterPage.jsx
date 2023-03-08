@@ -176,14 +176,14 @@ export const RegisterPage = () => {
 
           <nav className='lg:flex lg:justify-between' >
             <Link 
-              to="/" 
+              to="/auth" 
               className='font-bold block text-center my-5 text-gray-500'
             >
               ¿Ya tienes una cuenta?<span className='text-[#00FFF6]'> Inicia sesión</span>
             </Link>
 
             <Link 
-              to="/olvide-password" 
+              to="/auth/forgot-password" 
               className='font-bold block text-center my-5 text-[#00FFF6]'>
               Olvidé mi contraseña
             </Link>

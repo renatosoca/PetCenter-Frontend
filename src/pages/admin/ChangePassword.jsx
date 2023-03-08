@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { useForm, useAuth } from '../hooks';
-import AdminNav from "../components/AdminNav"
-import Alert from "../components/Alert";
+import { useForm, useAuth } from '../../hooks';
+import AdminNav from "../../components/AdminNav"
+import Alert from "../../components/Alert";
 
 const ChangePassword = () => {
     const [ password, setPassword ] = useState({ currentPassword: '', newPassword: '' });
@@ -11,13 +11,6 @@ const ChangePassword = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        
-        if ( Object.values( password ).includes('') ) return setObjAlert({ msg: 'Todos los Campos son Obligatorios', error: true});
-        if ( password?.newPassword.length < 6 ) return setObjAlert({ msg: 'La contraseña tiene que ser mínimo de 6 caracteres', error: true});
-
-        const respuesta = await saveNewPassword( password );
-        console.log(respuesta);
-        setObjAlert( respuesta );
     };
 
     const { msg } = objAlert;

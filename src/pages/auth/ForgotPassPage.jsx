@@ -1,33 +1,39 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useForm, useLogin } from '../../hooks';
+
+import { useForm, useForgotPassword } from '../../hooks';
 import { LoadingSpinner, WarningMessage } from '../../components';
 
 const initialForm = {
   email: '',
-  password: '',
 }
 
-export const LoginPage = () => {
+export const ForgotPassPage = () => {
+
   const formValitadions = {
     email: [ (email) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(email), 'Tiene que ser un email válido.' ],
-    password: [ (password) => password.length > 7, 'La contraseña debe contener un mínimo de 8 caracteres.' ],
   }
 
   const { 
-    formState, email, password, onInputChange, isFormValid, emailValid, passwordValid, onResetForm
+    formState, email, isFormValid, emailValid, onInputChange, onResetForm 
   } = useForm( initialForm, formValitadions );
 
-  const { handleSubmitLogin, status, errorMessage, isFormSubmit } = useLogin( formState, isFormValid, onResetForm );
+  const { 
+    status, errorMessage, isFormSubmit, handleSubmit 
+  } = useForgotPassword( formState, isFormValid, onResetForm );
 
   return (
     <>
+      <div className='hidden xl:block h-full bg-image-gradient-rigth'>
+      </div>
+
       <div className='px-5 py-10 max-w-xl w-full mx-auto'>
         <div >
-          <h1 className='uppercase text-center italic font-bold text-6xl text-white'>Bienvenido</h1>
+          <h1 className='uppercase text-center italic font-bold text-3xl lg:text-5xl xl:text-6xl text-white'>Recuperar Contraseña</h1>
         </div>
 
         <form 
-          onSubmit={ handleSubmitLogin }
+          onSubmit={ handleSubmit }
           className='w-full py-16 flex flex-col gap-7 text-white relative'
         >
           <div className="">
@@ -47,25 +53,6 @@ export const LoginPage = () => {
             <span className='text-red-500'>{ isFormSubmit && emailValid }</span>
           </div>
 
-          <div className="">
-            <label 
-              htmlFor="password"
-              className=' text-xs'
-            >
-              Contraseña
-            </label>
-            <input 
-              type="password" 
-              id="password" 
-              placeholder="Tu Correo Electronico"
-              name='password'
-              value={ password }
-              onChange={ onInputChange }
-              className="w-full py-[0.65rem] px-3 rounded-[.2rem] outline-none bg-[#2E2F36] mt-2" 
-            />
-            <span className='text-red-500'>{ isFormSubmit && passwordValid }</span>
-          </div>
-
           { errorMessage && <WarningMessage messageError={ errorMessage } /> }
 
           <button
@@ -78,21 +65,19 @@ export const LoginPage = () => {
 
         <nav className='lg:flex lg:justify-between' >
           <Link 
+            to="/auth" 
+            className='font-bold block text-center my-5 text-gray-500'
+          >
+            ¿Ya tienes una cuenta?<span className='text-[#00FFF6]'> Inicia Sesión</span>
+          </Link>
+
+          <Link 
             to="/auth/register" 
             className='font-bold block text-center my-5 text-gray-500'
           >
             ¿No tienes una cuenta?<span className='text-[#00FFF6]'> Regístrate</span>
           </Link>
-
-          <Link 
-            to="/auth/forgot-password" 
-            className='font-bold block text-center my-5 text-[#00FFF6]'>
-            Olvidé mi contraseña
-          </Link>
         </nav>
-      </div>
-
-      <div className='hidden xl:block h-full bg-image-gradient-left'>
       </div>
     </>
   );

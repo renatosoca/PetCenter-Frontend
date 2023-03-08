@@ -30,6 +30,14 @@ export const authReducer = ( state = {}, { type, payload } ) => {
         status: 'not-uthenticated',
         errorMessage: payload,
       }
+
+    case types.onSystem:
+      return {
+        ...state,
+        status: 'not-uthenticated',
+        errorMessage: null,
+        errorSystem: payload,
+      }
   
     default:
       state;

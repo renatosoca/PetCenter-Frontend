@@ -8,12 +8,12 @@
 }
 
 .bg-image-gradient-left{
-    background: linear-gradient(90deg, rgba(31,32,35,1) 0%, rgba(31,32,35,1) 2%, rgba(31,32,35,1) 4%, rgba(31,32,35,1) 7%, rgba(31,32,35,1) 9%, rgba(28,54,56,0) 100%), url(./dog_cat.jpg) no-repeat top center;
+    background: linear-gradient(90deg, rgba(31,32,35,1) 0%, rgba(31,32,35,1) 2%, rgba(31,32,35,1) 4%, rgba(31,32,35,1) 7%, rgba(31,32,35,1) 9%, rgba(28,54,56,0) 100%), url(/dog_cat.jpg) no-repeat top center;
     background-size: cover;
     opacity: .8;
 }
 .bg-image-gradient-rigth{
-    background: linear-gradient(90deg,rgba(28,54,56,0) 0%, rgba(31,32,35,1) 92%, rgba(31,32,35,1) 94%, rgba(31,32,35,1) 96%, rgba(31,32,35,1) 98%, rgba(31,32,35,1) 100% ), url(./dog_cat.jpg) no-repeat top center;
+    background: linear-gradient(90deg,rgba(28,54,56,0) 0%, rgba(31,32,35,1) 92%, rgba(31,32,35,1) 94%, rgba(31,32,35,1) 96%, rgba(31,32,35,1) 98%, rgba(31,32,35,1) 100% ), url(/dog_cat.jpg) no-repeat top center;
     background-size: cover;
     opacity: .8;
 }

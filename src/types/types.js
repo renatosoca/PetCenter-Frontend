@@ -4,4 +4,5 @@ export const types = {
   onLogout: '[auth] Logout',
   onclearMessageError: '[auth] Clear Message Error',
   onRegister: '[auth] Register',
+  onSystem: '[auth] System',
 }

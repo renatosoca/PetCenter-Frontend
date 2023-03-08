@@ -11,6 +11,7 @@ const initialState = {
   user: {},
   errorMessage: null,
   errorSuccess: null,
+  errorSystem: null,
 };
 
 export const AuthProvider = ({ children }) => {
@@ -65,7 +66,7 @@ export const AuthProvider = ({ children }) => {
 
     } catch (error) {
         console.log(error.response.data.msg)
-      dispatch({ type: types.onLogout, payload: error.response.data.msg });
+      dispatch({ type: types.onSystem, payload: error.response.data.msg });
     }
   }
 
