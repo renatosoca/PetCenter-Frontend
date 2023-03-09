@@ -9,4 +9,8 @@ export const types = {
   onClearSuccessMessage: '[auth] Clear Success Message',
   onConfirmAccount: '[auth] Confirm Account',
   onForgotPassword: '[auth] Forgot Password',
+
+  onLoadingPatient: '[patient] Loading Patient',
+  onGetPatients: '[patient] Get Patients',
+  onAddPatient: '[patient] Add Patient',
 }

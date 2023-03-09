@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useForm, useAuth } from '../../hooks';
-import AdminNav from "../../components/AdminNav"
 import Alert from "../../components/Alert";
 
 export const AdminNewPassPage = () => {
@@ -17,7 +16,6 @@ export const AdminNewPassPage = () => {
 
     return (
         <>
-            <AdminNav />
 
             <h2 className='font-black text-3xl text-center mt-10'>Cambiar Contraseña</h2>
             <p className='text-xl mt-5 mb-10 text-center'>Modifica tu {''}<span className='text-indigo-500 font-bold'>Contraseña Aquí</span></p>
