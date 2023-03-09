@@ -1,32 +1,37 @@
 import { useContext } from 'react';
 import { useEffect, useState } from 'react';
-import { Modal } from '../../components';
+import { Modal, PatientList } from '../../components';
 
-import PatientList from "../../components/PatientList";
 import { UiContext } from '../../context';
 import { useAdmin } from '../../hooks';
 
 export const AdminHomePage = () => {
+
   const { startOpenModal } = useContext( UiContext );
+  const { startGetPatients, startActivePatient } = useAdmin();
 
-  const { startGetPatients } = useAdmin();
-  const [ showForm, setShowForm ] = useState(false);
-
-  useEffect(() => {
+  /* useEffect(() => {
     startGetPatients();
-  }, [])
+  }, []); */
+
+  const handleNewPatient = () => {
+    startActivePatient({ name: '', owner: '', email: '', date: '', symptoms: '' });
+    startOpenModal();
+  }
 
   return (
     <div className="">
-      <button
-        type='button'
-        className='bg-indigo-600 text-white font-bold p-3 rounded-md uppercase'
-        onClick={ startOpenModal }
-      >
-        { showForm ? 'Ocultar Formulario' : 'Mostrar Formulario'}
-      </button>
+      <div className='flex justify-end'>
+        <button
+          type='button'
+          className='text-white bg-slate-700 py-2 px-3 rounded-md font-medium'
+          onClick={ handleNewPatient }
+        >
+          Agregar Paciente
+        </button>
+      </div>
 
-      <div className="">
+      <div className="pt-3">
         <PatientList />
       </div>
 

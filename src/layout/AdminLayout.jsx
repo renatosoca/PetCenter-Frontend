@@ -1,26 +1,25 @@
-import { useContext } from "react";
-
 import { Outlet, Navigate } from "react-router-dom";
-import { AuthContext } from "../context";
-import { Footer, Header, NavBar } from "../components";
+
+import { Footer, Header, LoadingPage } from "../components";
+import { useAuth } from "../hooks";
 
 export const AdminLayout = () => {
-  const { status, user } = useContext(AuthContext);
+  const { status, user } = useAuth();
   
-  if ( status === 'init' ) return 'Cargando...';
+  if ( status === 'init' ) return <LoadingPage />;
 
   return (
     <>
       <Header />
 
-      { status === 'not-uthenticated' && <Navigate to="/auth" /> }
+      { status === 'not-uthenticated' && <Navigate to="/" /> }
       { status === 'authenticated' && (
-        <main className="container mx-auto mt-10">
+        <main className="container mx-auto pt-4">
           <Outlet />
         </main>
       )}
 
       <Footer />
     </>
-  );
-};
+  )
+}

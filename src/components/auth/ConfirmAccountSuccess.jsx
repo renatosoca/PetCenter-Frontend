@@ -13,7 +13,7 @@ export const ConfirmAccountSuccess = () => {
       </p>
 
       <Link 
-        to="/auth"
+        to="/"
         className='block w-full bg-green-400 text-black text-center p-2 hover:text-white transition-colors'
         target='_blank'
       >

@@ -1,26 +1,52 @@
-import usePatients from "../../hooks/usePatients";
+import { useContext } from "react";
+import { FaUserEdit } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
+
+import { useAdmin } from "../../hooks";
+import { UiContext } from "../../context";
 
 export const Patients = ({ patient }) => {
-  const { name, owner, email, date, symptoms, _id } = patient;
+  const { startActivePatient, startDeletePatient } = useAdmin()
+  const { startOpenModal } = useContext( UiContext );
 
+  const { name, owner, email, date, symptoms, _id } = patient;
+  
   const FormatDate = (date) => {
     const newDate = new Date(date);
-    return new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(
-      newDate
-    );
+    return new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format( newDate );
   };
+
+  const handleEditPatient = () => {
+    const newDate = new Date(date);
+    const dateFormated = newDate.toISOString().slice(0, 10);
+    startActivePatient({ name, owner, email, date: dateFormated, symptoms, _id });
+    startOpenModal();
+  }
 
   return (
     <>
       <tr className="">
-        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{name}</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{owner}</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{email}</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+        <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{name}</td>
+        <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{owner}</td>
+        <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{email}</td>
+        <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
           {FormatDate(date)}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{symptoms}</td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Editar</td>
+        <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{symptoms}</td>
+        <td className="px-6 whitespace-nowrap font-medium text-gray-900">
+          <div className="flex justify-center items-center h-full gap-3 text-2xl">
+            <button>
+              <FaUserEdit
+                onClick={handleEditPatient}
+              />
+            </button>
+            <button>
+              <AiFillDelete 
+                onClick={ () => startDeletePatient(_id) }
+              />
+            </button>
+          </div>
+        </td>
       </tr>
     </>
   );

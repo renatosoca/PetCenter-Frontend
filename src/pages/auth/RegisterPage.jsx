@@ -185,7 +185,7 @@ export const RegisterPage = () => {
             >
              ¿Ya tienes una cuenta? {''}
               <Link 
-              to="/auth" 
+              to="/" 
               className={`text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' } `}
               > 
                 Inicia sesión
@@ -193,7 +193,7 @@ export const RegisterPage = () => {
             </span>
 
             <Link 
-              to="/auth/forgot-password" 
+              to="/forgot-password" 
               className={`font-bold block text-center my-5 text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' }`}>
               Olvidé mi contraseña
             </Link>

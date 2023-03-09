@@ -3,6 +3,7 @@ import ReactModal from 'react-modal';
 
 import { UiContext } from '../../context';
 import { useForm, usePatientModal } from '../../hooks';
+import { LoadingSpinner } from '../ui/LoadingSpinner';
 
 const customStyles = {
   content: {
@@ -33,33 +34,20 @@ export const Modal = () => {
     date: [ (value) => value.length > 0, "La fecha es obligatoria" ],
     symptoms: [ (value) => value.length > 0, "Los síntomas son obligatorios" ]
   }
+
   const [ formValues, setFormValues ] = useState(initialState);
 
   const { 
     formState, name, owner, email, date, symptoms, isFormValid, nameValid, ownerValid, emailValid, dateValid, symptomsValid, onInputChange, onResetForm
   } = useForm( formValues, formValidations );
 
-  const { isFormSubmit, errorMessage, status, activePatient, handleSubmit, handleOpenModal, handleCloseModal } = usePatientModal( formState, isFormValid, onResetForm );
+  const { 
+    isFormSubmit, isLoadingAction, activePatient, handleSubmit
+  } = usePatientModal( formState, isFormValid, onResetForm, startCloseModal );
 
   useEffect(() => {
     if ( activePatient !== null ) setFormValues( activePatient );
   }, [ activePatient ]);
-
-  /* const handleSubmit = (e) => {
-    e.preventDefault();
-    if ( [nombre, propietario, email, fechaAlta, sintomas].includes('') ) return setObjAlert({ msg: 'Todos los Campos son obligatorios', error:true });
-        
-        savePatient( { nombre, propietario, email, fechaAlta, sintomas, id } );
-
-        setObjAlert({ msg: 'Guardado Correctamente'});
-
-        setNombre( '' );
-        setPropietario( '' );
-        setEmail( '' );
-        setFechaAlta( '' );
-        setSintomas( '' );
-        setId( '' );
-  }; */
 
   return (
     <ReactModal
@@ -68,11 +56,14 @@ export const Modal = () => {
       closeTimeoutMS={200}
       style={customStyles}
       overlayClassName="modal-fondo"
-      className='min-w-[35rem] absolute overflow-auto p-4 border-none outline-none bg-slate-50'
+      className={`min-w-[35rem] absolute overflow-auto px-4 py-6 border-none outline-none bg-slate-50`}
     >
-      <div>
-        <h1 className="text-xl font-extrabold italic text-center uppercase ">Agregar un Paciente</h1>
+      <div className='relative'>
+        <h1 className="text-3xl pb-4 font-extrabold italic text-center uppercase after:content-[''] after:absolute after:w-full after:h-[.1rem] after:bg-gray-500 after:bottom-0 after:left-0">
+          { activePatient?._id ? 'Editar paciente' : 'Nuevo paciente' }
+        </h1>
       </div>
+
       <form
         onSubmit={handleSubmit}
         className="w-full py-5 flex flex-col gap-4 text-black relative"
@@ -165,14 +156,12 @@ export const Modal = () => {
           <span className="text-red-500">{isFormSubmit && symptomsValid}</span>
         </div>
 
-        {errorMessage && <WarningMessage messageError={errorMessage} />}
-
         <button
           type="submit"
           className="w-full p-3 bg-green-400 rounded-[.2rem] font-bold mt-4 text-black flex items-center justify-center hover:text-white transition-colors"
-          disabled={status === "loading"}
+          disabled={ isLoadingAction}
         >
-          {status === "loading" ? <LoadingSpinner /> : "Registrar Paciente"}
+          { isLoadingAction ? <LoadingSpinner /> : activePatient?._id ? 'Editar paciente' : 'Nuevo paciente' }
         </button>
       </form>
     </ReactModal>

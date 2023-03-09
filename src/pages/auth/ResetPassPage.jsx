@@ -118,7 +118,7 @@ export const ResetPassPage = () => {
             >
               ¿Ya tienes una cuenta? {''}
               <Link 
-              to="/auth" 
+              to="/" 
               className={`text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' } `}
               > 
                 Inicia sesión

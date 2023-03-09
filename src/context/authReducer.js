@@ -2,6 +2,7 @@ import { types } from "../types";
 
 export const authReducer = ( state = {}, { type, payload } ) => {
   switch ( type ) {
+
     case types.onChecking:
       return {
         ...state,
@@ -53,12 +54,38 @@ export const authReducer = ( state = {}, { type, payload } ) => {
         errorMessage: null,
       }
 
+    case types.onUpdateUser: 
+      return {
+        ...state,
+        user: payload,
+        errorMessages: null,
+        isLoading: 'updated',
+      }
+    
+    case types.onLoadingUser:
+      return {
+        ...state,
+        isLoading: 'Loading',
+      }
+
     case types.onSystem:
       return {
         ...state,
         status: 'not-uthenticated',
         errorMessage: null,
         errorSystem: payload,
+      }
+
+    case types.onShowMessageSuccess:
+      return {
+        ...state,
+        successMessage: payload,
+      }
+
+    case types.onShowMessageError:
+      return {
+        ...state,
+        errorMessage: payload,
       }
   
     default:

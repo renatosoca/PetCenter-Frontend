@@ -1,7 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
+import { useAdmin, useAuth } from "../../hooks";
 
 export const NavBar = ({ navActive }) => {
+  const { startLogout } = useAuth();
+  const { startLogoutPatient } = useAdmin();
+
+  const handleClick = () => {
+    startLogout();
+    startLogoutPatient();
+  }
+  
   return (
     <nav 
       className={`${navActive ? 'flex' : 'hidden' }  flex-col gap-2 absolute md:right-[1.6%] right-[6.5vw] bg-[#161B22] top-[100%] py-4 text-[.9rem] text-gray-700 rounded-lg after:content[''] after:absolute after:-top-2 after:rotate-45 after:w-5 after:h-5 after:bg-[#161B22] after:z-[0] after:right-4 z-[10]`}
@@ -22,7 +31,7 @@ export const NavBar = ({ navActive }) => {
 
       <button
         type='button'
-        onClick={ () => '0logout' }
+        onClick={ handleClick }
         className="font-bold px-4 py-1 text-red-500 hover:bg-red-500 hover:text-white transition-colors text-start flex gap-1 items-center"
       >
         <BiLogOut className="text-base" />

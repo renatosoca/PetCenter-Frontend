@@ -70,7 +70,7 @@ export const ForgotPassPage = () => {
           >
             ¿Ya tienes una cuenta? {''}
             <Link 
-            to="/auth" 
+            to="/" 
             className={`text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' } `}
             > 
               Inicia sesión
@@ -82,7 +82,7 @@ export const ForgotPassPage = () => {
           >
             ¿No tienes una cuenta? {''}
             <Link 
-            to="/auth/register" 
+            to="/register" 
             className={`text-green-400 ${ ( status === 'loading' ) ? 'pointer-events-none': '' } `}
             > 
               Regístrate

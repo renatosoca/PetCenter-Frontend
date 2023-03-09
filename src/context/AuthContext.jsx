@@ -1,4 +1,4 @@
-import { useReducer, useState, createContext } from "react";
+import { useReducer, createContext } from "react";
 
 import { petCenterApi } from "../api";
 import { types } from "../types";
@@ -8,6 +8,7 @@ export const AuthContext = createContext();
 
 const initialState = {
   status: "init",
+  isLoading: 'none',
   user: {},
   errorMessage: null,
   successMessage: null,
@@ -25,8 +26,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem( "token", data.jwt );
       localStorage.setItem( "time-token-start", new Date().getTime() );
 
-      const { _id, name, lastname, phone } = data;
-      dispatch({ type: types.onLogin, payload: { _id, name, lastname, email, phone } });
+      const { _id, name, lastname, phone, webPage } = data;
+      dispatch({ type: types.onLogin, payload: { _id, name, lastname, email, phone, webPage } });
 
     } catch (error) {
       dispatch({ type: types.onLogout, payload: error.response.data.msg });
@@ -61,8 +62,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem( "token", data.jwt );
       localStorage.setItem( "time-token-start", new Date().getTime() );
       
-      const { _id, name, lastname, email, phone } = data;
-      dispatch({ type: types.onLogin, payload: { _id, name, lastname, email, phone } });
+      const { _id, name, lastname, email, phone, webPage } = data;
+      dispatch({ type: types.onLogin, payload: { _id, name, lastname, email, phone, webPage } });
 
     } catch (error) {
       dispatch({ type: types.onSystem, payload: error.response.data.msg });
@@ -83,7 +84,6 @@ export const AuthProvider = ({ children }) => {
 
       const { data } = await petCenterApi.get( `/auth/confirm/${token}` );
       dispatch({ type: types.onRegister, payload: data.msg });
-      console.log(data.msg);
 
     } catch (error) {
       dispatch({ type: types.onLogout, payload: error.response.data.msg });
@@ -95,7 +95,6 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: types.onChecking });
 
       const { data } = await petCenterApi.post( "/auth/forgot-password", { email } );
-      console.log(data.msg);
       dispatch({ type: types.onForgotPassword, payload: data.msg });
 
     } catch (error) {
@@ -103,10 +102,12 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  //Opcional
   const startValidateToken = async ( token ) => {
     try {
+
       const { data } = await petCenterApi.get( `/auth/reset-password/${token}` );
-      console.log(data);
+      
     } catch (error) {
       dispatch({ type: types.onLogout, payload: error.response.data.msg });
     }
@@ -124,76 +125,32 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  /* useEffect(() => {
-    const authUser = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) return setLoading(false);
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      try {
-        const { data } = await petCenterApi("/veterinarios/perfil", config);
-
-        setAuth(data);
-      } catch (error) {
-        console.log(error);
-        setAuth({});
-      }
-      setLoading(false);
-    };
-    authUser();
-  }, []); */
-
-/*   const editProfile = async (datos) => {
-    const token = localStorage.getItem("token");
-    if (!token) return setLoading(false);
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
+  //Privates
+  const startUpdateProfile = async ( payload ) => {
     try {
-      await petCenterApi.put(
-        `/veterinarios/perfil/${datos._id}`,
-        datos,
-        config
-      );
-      return { msg: "Almacenado Correctamente", error: false };
+      dispatch({ type: types.onLoadingUser });
+      
+      const { data } = await petCenterApi.put( `/auth/profile/${ payload._id }`, payload );
+      dispatch({ type: types.onUpdateUser, payload: data.user });
+      dispatch({ type: types.onShowMessageSuccess, payload: data.msg });
+
     } catch (error) {
-      return { msg: error.response.data.msg, error: true };
+      dispatch({ type: types.onShowMessageError, payload: error.response.data.msg });
     }
-  }; */
+  }
 
-/*   const saveNewPassword = async (datos) => {
-    const token = localStorage.getItem("token");
-    if (!token) return setLoading(false);
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
+  const startUpdatePassProfile = async ( payload ) => {
 
     try {
-      const { data } = await petCenterApi.put(
-        "/veterinarios/actualizar-password",
-        datos,
-        config
-      );
+      dispatch({ type: types.onChecking });
 
-      return { msg: data.msg, error: false };
+      const { data } = await petCenterApi.put( '/auth/password-profile', payload );
+      console.log(data);
+
     } catch (error) {
-      return { msg: error.response.data.msg, error: true };
+      console.log(error)
     }
-  }; */
+  }
 
   return (
     <AuthContext.Provider value={{
@@ -210,6 +167,9 @@ export const AuthProvider = ({ children }) => {
       startForgotPassword,
       startValidateToken,
       startResetPassword,
+
+      startUpdateProfile,
+      startUpdatePassProfile,
     }} >
       {children}
     </AuthContext.Provider>

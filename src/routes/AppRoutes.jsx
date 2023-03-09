@@ -5,7 +5,7 @@ export const AppRoutes = () => {
   return (
     <Routes>
       
-      <Route path="/auth/*" element={<AuthRoutes />} />
+      <Route path="/*" element={<AuthRoutes />} />
 
       <Route path='/admin/*' element={ <AdminRoutes /> } />
 
