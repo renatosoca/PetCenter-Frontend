@@ -1,28 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useForm, useAuth } from '../../hooks';
-import Alert from '../../components/Alert';
 
 export const AdminUsersPage = () => {
-    const { auth, editProfile } = useAuth();
 
-    const [ profile, setProfile ] = useState({});
-    const [ objAlert, setObjAlert ] = useState({});
-
-    useEffect( () => {
+    /* useEffect( () => {
         setProfile( auth );
-    }, [ auth ]);
+    }, [ auth ]); */
 
     const handleSubmitProfile = async e => {
         e.preventDefault();
 
-        const { nombre, email} = profile;
+        /* const { nombre, email} = profile;
         if ( [nombre, email].includes('') ) return setObjAlert( { msg: 'El Email y El nombre son Obligatorios', error:true } );
 
         const resultado = await editProfile( profile );
-        setObjAlert( resultado );
+        setObjAlert( resultado ); */
     };
-
-    const { msg } = objAlert;
 
     return (
         <>
@@ -37,8 +30,6 @@ export const AdminUsersPage = () => {
             <div className='flex justify-center'>
                 <div className='w-full md:w-1/2 bg-white shadow rounded-lg p-5'>
 
-                    { msg && <Alert objAlert={objAlert} /> }
-
                     <form onSubmit={ handleSubmitProfile}>
                         <div className='mb-3'>
                             <label htmlFor="nombre" className='uppercase font-bold text-gray-500'>
@@ -50,11 +41,6 @@ export const AdminUsersPage = () => {
                                 placeholder='Tu Nombre'
                                 name='nombre'
                                 id='nombre'
-                                value={profile.nombre || ''}
-                                onChange={ e => setProfile({ 
-                                    ...profile,
-                                    [e.target.name]: e.target.value
-                                })}
                             />
                         </div>
 
@@ -68,11 +54,11 @@ export const AdminUsersPage = () => {
                                 placeholder='Tu Email'
                                 name='email'
                                 id='email'
-                                value={profile.email || ''}
+                                /* value={profile.email || ''}
                                 onChange={ e => setProfile({ 
                                     ...profile,
                                     [e.target.name]: e.target.value
-                                })}
+                                })} */
                             />
                         </div>
 
@@ -86,11 +72,11 @@ export const AdminUsersPage = () => {
                                 placeholder='Tu Telefono'
                                 name='telefono'
                                 id='phone'
-                                value={profile.telefono || ''}
+                                /* value={profile.telefono || ''}
                                 onChange={ e => setProfile({ 
                                     ...profile,
                                     [e.target.name]: e.target.value
-                                })}
+                                })} */
                             />
                         </div>
 
@@ -104,11 +90,11 @@ export const AdminUsersPage = () => {
                                 placeholder='Tu Pagina Web'
                                 name='web'
                                 id='web'
-                                value={profile.web || ''}
+                                /* value={profile.web || ''}
                                 onChange={ e => setProfile({ 
                                     ...profile,
                                     [e.target.name]: e.target.value
-                                })}
+                                })} */
                             />
                         </div>
 

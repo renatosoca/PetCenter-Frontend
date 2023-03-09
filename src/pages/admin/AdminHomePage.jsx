@@ -1,10 +1,13 @@
-import { useEffect } from 'react';
-import { useState } from 'react'
-import Form from "../../components/Form";
+import { useContext } from 'react';
+import { useEffect, useState } from 'react';
+import { Modal } from '../../components';
+
 import PatientList from "../../components/PatientList";
+import { UiContext } from '../../context';
 import { useAdmin } from '../../hooks';
 
 export const AdminHomePage = () => {
+  const { startOpenModal } = useContext( UiContext );
 
   const { startGetPatients } = useAdmin();
   const [ showForm, setShowForm ] = useState(false);
@@ -12,25 +15,22 @@ export const AdminHomePage = () => {
   useEffect(() => {
     startGetPatients();
   }, [])
-  
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="">
       <button
         type='button'
-        className='bg-indigo-600 text-white font-bold p-3 rounded-md uppercase mb-10 md:hidden'
-        onClick={ () => setShowForm( !showForm )}
+        className='bg-indigo-600 text-white font-bold p-3 rounded-md uppercase'
+        onClick={ startOpenModal }
       >
         { showForm ? 'Ocultar Formulario' : 'Mostrar Formulario'}
       </button>
 
-      <div className={`${showForm ? 'block' : 'hidden' } md:block md:w-1/2 lg:w-2/5`}>
-        {/* <Form /> */}
+      <div className="">
+        <PatientList />
       </div>
 
-      <div className="md:w-1/2 lg:w-3/5">
-        {/* <PatientList /> */}
-      </div>
+      <Modal />
     </div>
   )
 }

@@ -25,9 +25,23 @@
 ::-webkit-scrollbar {
     width: .4rem;
     height: .2rem;
-    background-color: #1F2023;
+    background-color: #4b4d53;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: #4ADE80;
+    background-color: #161B22;
     border-radius: .5rem;
+}
+.scroll-admin-layout::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background-color: blue;
+}
+.modal-fondo {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(31,32,35,.6);
 }

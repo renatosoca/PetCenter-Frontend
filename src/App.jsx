@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAuth } from './hooks';
 import { AppRoutes } from "./routes";
 
-import { PatientProvider } from "./context";
+import { PatientProvider, UiProvider } from "./context";
 
 export const App = () => {
 
@@ -13,8 +13,10 @@ export const App = () => {
   }, [])
 
   return (
-    <PatientProvider>
-      <AppRoutes />
-    </PatientProvider>
+    <UiProvider>
+      <PatientProvider>
+        <AppRoutes />
+      </PatientProvider>
+    </UiProvider>
   )
 }

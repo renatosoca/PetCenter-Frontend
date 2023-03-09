@@ -5,7 +5,7 @@ export const patientReducer = ( state = {}, { type, payload } ) => {
     case types.onLoadingPatient:
       return {
         ...state,
-        isLoadingPatient: true,
+        isLoadingPatients: true,
         activePatient: null,
       }
 
@@ -18,7 +18,7 @@ export const patientReducer = ( state = {}, { type, payload } ) => {
     case types.onAddPatient:
       return {
         ...state,
-        patient: payload,
+        patients: [ payload, ...state.patients ],
       }
   
     default:

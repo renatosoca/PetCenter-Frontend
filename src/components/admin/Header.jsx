@@ -24,7 +24,7 @@ export const Header = () => {
           className={`${ isNavbar ? 'absolute' : 'hidden' } md:block  md:static bg-gray-100 md:bg-inherit top-full right-0 left-0 flex flex-col md:flex-row items-center justify-center gap-2 py-10 md:py-0 text-[1.1rem] text-gray-500 md:text-slate-300`}
         >
           <NavLink 
-            to='/admin' 
+            to='/admin/' 
             className={({isActive}) => `w-full text-center rounded-none font-medium transition-all ${isActive ? 'bg-gray-300 md:bg-inherit md:bg-gray-500': ''} py-1 px-3 md:rounded-sm md:hover:text-white hover:text-black transition-colors`}
           >
             Pacientes
@@ -40,7 +40,7 @@ export const Header = () => {
 
         <div className=' flex items-center justify-center gap-2 '>
           <div className=' flex items-center justify-center gap-2 text-white '>
-            <span className='font-bold text-base'>{ user?.name } { (user?.lastname).substring(0,1) }</span>
+            <span className='font-bold text-base'>{ user?.name } { (user?.lastname) }</span>
             <button>
               <RxAvatar 
                 onClick={ () => setIsSettings(!isSettings) }

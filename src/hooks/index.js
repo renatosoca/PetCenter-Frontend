@@ -7,3 +7,4 @@ export * from './useForgotPassword';
 export * from './useResetPassword';
 
 export * from './useAdmin';
+export * from './usePatientModal';

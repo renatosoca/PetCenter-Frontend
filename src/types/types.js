@@ -13,4 +13,7 @@ export const types = {
   onLoadingPatient: '[patient] Loading Patient',
   onGetPatients: '[patient] Get Patients',
   onAddPatient: '[patient] Add Patient',
+
+  onOpenModal: '[ui] Open Modal',
+  onCloseModal: '[ui] Close Modal',
 }

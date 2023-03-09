@@ -6,7 +6,7 @@ import { patientReducer } from "./patientReducer";
 export const PatientContext = createContext();
 
 const initialState = {
-  isLoadingPatient: false,
+  isLoadingPatients: false,
   patients: [],
   activePatient: null,
 }
@@ -19,17 +19,19 @@ export const PatientProvider = ({ children }) => {
       dispatch({ type: types.onLoadingPatient });
 
       const { data } = await petCenterApi.get( '/patient' );
-      console.log(data.patients);
+      dispatch( { type: types.onGetPatients, payload: data.patients } )
+
     } catch (error) {
       console.error(error.response.data.msg);
     }
   }
 
-  const startAddPatient = async ( patient ) => {
+  const startAddPatient = async ( payload ) => {
     try {
       dispatch({ type: types.onLoadingPatient });
 
-      const { data } = await petCenterApi.post( '/patient', patient );
+      const { data } = await petCenterApi.post( '/patient', payload );
+      dispatch( { type: types.onAddPatient, payload: data.patient } );
       console.log(data);
       
     } catch (error) {

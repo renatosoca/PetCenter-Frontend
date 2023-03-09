@@ -1,18 +1,11 @@
 import { useState } from "react"
 import { useForm, useAuth } from '../../hooks';
-import Alert from "../../components/Alert";
 
 export const AdminNewPassPage = () => {
-    const [ password, setPassword ] = useState({ currentPassword: '', newPassword: '' });
-    const [ objAlert, setObjAlert ] = useState({});
-
-    const { saveNewPassword } = useAuth();
 
     const handleSubmit = async e => {
         e.preventDefault();
     };
-
-    const { msg } = objAlert;
 
     return (
         <>
@@ -22,8 +15,6 @@ export const AdminNewPassPage = () => {
 
             <div className='flex justify-center'>
                 <div className='w-full md:w-1/2 bg-white shadow rounded-lg p-5'>
-
-                    { msg && <Alert objAlert={objAlert} /> }
 
                     <form onSubmit={ handleSubmit }>
                             <div className='mb-3'>
@@ -36,9 +27,9 @@ export const AdminNewPassPage = () => {
                                     placeholder='Tu Contraseña Actual'
                                     name='currentPassword'
                                     id='currentPassword'
-                                    onChange={ e => setPassword( {
+                                    /* onChange={ e => setPassword( {
                                         ...password, [e.target.name]: e.target.value
-                                    } ) }
+                                    } ) } */
                                 />
                             </div>
                             
@@ -52,9 +43,9 @@ export const AdminNewPassPage = () => {
                                     placeholder='Tu Nueva Contraseña'
                                     name='newPassword'
                                     id='newPassword'
-                                    onChange={ e => setPassword( {
+                                    /* onChange={ e => setPassword( {
                                         ...password, [e.target.name]: e.target.value
-                                    } ) }
+                                    } ) } */
                                 />
                             </div>
 
