@@ -147,7 +147,7 @@ export const Modal = () => {
           <textarea
             type="text"
             id="symptoms"
-            placeholder="Tu contraseña"
+            placeholder="Ingrese los sintomas"
             name="symptoms"
             value={symptoms}
             onChange={onInputChange}

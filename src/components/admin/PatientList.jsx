@@ -6,8 +6,6 @@ import { Patients } from "./Patients";
 export const PatientList = () => {
   const { patients, isLoadingPatients } = useContext(PatientContext);
 
-  /* if (isLoadingPatients) return <LoadingTablePatients />; */
-
   return (
     <>
       <h2 className="font-black text-3xl text-center pb-6">
@@ -46,7 +44,7 @@ export const PatientList = () => {
                     <Patients key={patient._id} patient={patient} />
                   ))
                 )
-              || patients?.length === 0 && (<h2 className="absolute text-center w-full">En este espacio se mostrarán tus pacientes</h2>)) 
+              || patients?.length === 0 && (<tr><td className="absolute text-center w-full">En este espacio se mostrarán tus pacientes</td></tr>)) 
             }
 
           </tbody>

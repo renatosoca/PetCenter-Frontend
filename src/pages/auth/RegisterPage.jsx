@@ -24,10 +24,10 @@ export const RegisterPage = () => {
   }
   
   const { 
-    formState, name, lastname, phone, email, password, repeatPassword, onInputChange, isFormValid, nameValid, lastnameValid, emailValid, phoneValid, passwordValid, repeatPasswordValid 
+    formState, name, lastname, phone, email, password, repeatPassword, onInputChange, isFormValid, nameValid, lastnameValid, emailValid, phoneValid, passwordValid, repeatPasswordValid, onResetForm
   } = useForm( initialForm, formValitadions );
 
-  const { status, errorMessage, isFormSubmit, successMessage, handleSubmitRegister } = useRegister( formState, isFormValid );
+  const { status, errorMessage, isFormSubmit, successMessage, handleSubmitRegister } = useRegister( formState, isFormValid, onResetForm );
 
   return (
     <>
