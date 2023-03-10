@@ -1,4 +1,6 @@
 import { useState } from "react";
+
+import { LoadingSpinner, SuccessMessage, WarningMessage } from "../../components";
 import { useForm, useAuth } from "../../hooks";
 
 const initalForm = {
@@ -7,12 +9,12 @@ const initalForm = {
 };
 
 export const AdminNewPassPage = () => {
+    const { successMessage, errorMessage, isLoading, startUpdatePassProfile } = useAuth();
+
   const formValidations = {
     oldPassword: [ (oldPassword) => oldPassword.length > 0, "La contraseña actual es requerida", ],
     newPassword: [ (newPassword) => newPassword.length > 7, "La nueva contraseña tiene que tener un mínimo de 8 caracteres" ],
   };
-
-  const { startUpdatePassProfile } = useAuth();
 
   const [ isFormSubmit , setIsFormSubmit ] = useState(false);
 
@@ -28,62 +30,67 @@ export const AdminNewPassPage = () => {
     startUpdatePassProfile(formState);
 
     setIsFormSubmit(false);
+    onResetForm();
   };
 
   return (
     <>
-      <h2 className="font-black text-3xl text-center mt-10">
+      <h2 className="font-black text-3xl text-center py-3 italic uppercase">
         Cambiar Contraseña
       </h2>
-      <p className="text-xl mt-5 mb-10 text-center">
-        Modifica tu {""}
-        <span className="text-indigo-500 font-bold">Contraseña Aquí</span>
-      </p>
+      <p className="text-base pb-6 text-center font-medium text-indigo-500">Ingrese su nueva contraseña</p>
 
       <div className="flex justify-center">
         <div className="w-full md:w-1/2 bg-white shadow rounded-lg p-5">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label
-                htmlFor="oldPassword"
-                className="uppercase font-bold text-gray-500"
-              >
+        <form
+            onSubmit={handleSubmit}
+            className="w-full flex flex-col gap-3 text-black font-medium relative"
+          >
+            {!!successMessage && <SuccessMessage title={false} messageSuccess={ successMessage } />}
+
+            <div className="">
+              <label htmlFor="oldPassword" className="text-xs">
                 Contraseña Actual
               </label>
+
               <input
                 type="password"
-                className="outline-none border bg-gray-50 w-full p-2 mt-3 rounded-lg"
+                id="name"
                 placeholder="Tu Contraseña Actual"
-                id="oldPassword"
                 name="oldPassword"
-                value={ oldPassword }
-                onChange={ onInputChange }
+                value={oldPassword}
+                onChange={onInputChange}
+                className="w-full py-[0.65rem] px-3 rounded-[.2rem] outline-none bg-[#2E2F36] text-white"
               />
+              <span className="text-red-500">{isFormSubmit && oldPasswordValid}</span>
             </div>
 
-            <div className="mb-3">
-              <label
-                htmlFor="newPassword"
-                className="uppercase font-bold text-gray-500"
-              >
+            <div className="">
+              <label htmlFor="newPassword" className=" text-xs">
                 Nueva Contraseña
               </label>
+
               <input
                 type="password"
-                className="outline-none border bg-gray-50 w-full p-2 mt-3 rounded-lg"
-                placeholder="Tu Nueva Contraseña"
                 id="newPassword"
+                placeholder="Tu Nueva Contraseña"
                 name="newPassword"
-                value={ newPassword }
-                onChange={ onInputChange }
+                value={newPassword}
+                onChange={onInputChange}
+                className="w-full py-[0.65rem] px-3 rounded-[.2rem] outline-none bg-[#2E2F36] text-white"
               />
+              <span className="text-red-500">{isFormSubmit && newPasswordValid}</span>
             </div>
 
-            <input
+            { errorMessage && <WarningMessage messageError={errorMessage} /> }
+
+            <button
               type="submit"
-              value="Actualizar Contraseña"
-              className="w-full border py-3 mt-3 bg-indigo-700 rounded-xl text-white uppercase font-bold cursor-pointer hover:bg-indigo-800"
-            />
+              className="w-full p-3 bg-indigo-500 rounded-[.2rem] font-bold mt-4 text-white flex items-center justify-center hover:text-black transition-colors"
+              disabled={isLoading === "Loading"}
+            >
+              { isLoading === "Loading" ? <LoadingSpinner /> : "Actualizar contraseña" }
+            </button>
           </form>
         </div>
       </div>

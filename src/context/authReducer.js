@@ -80,12 +80,14 @@ export const authReducer = ( state = {}, { type, payload } ) => {
       return {
         ...state,
         successMessage: payload,
+        isLoading: 'none',
       }
 
     case types.onShowMessageError:
       return {
         ...state,
         errorMessage: payload,
+        isLoading: 'none',
       }
   
     default:
