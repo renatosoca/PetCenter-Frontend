@@ -15,6 +15,7 @@ const initialState = {
   isSavedPatient: 'notSaved',
 }
 
+//Show Error Message - Optionals
 export const PatientProvider = ({ children }) => {
   const [ patientState, dispatch ] = useReducer( patientReducer, initialState );
   const { user } = useAuth();
@@ -38,6 +39,7 @@ export const PatientProvider = ({ children }) => {
     dispatch( { type: types.onActivePatient, payload: patient } );
   }
 
+  //Show Error Message - Optionals
   const startSavedPatient = async ( payload ) => {
     try {
       dispatch({ type: types.onLoadingAction });
@@ -58,6 +60,7 @@ export const PatientProvider = ({ children }) => {
     }
   }
 
+  //Show Error Message - Optionals
   const startDeletePatient = async ( _id ) => {
     try {
       dispatch({ type: types.onLoadingAction });

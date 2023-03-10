@@ -145,10 +145,8 @@ export const AuthProvider = ({ children }) => {
 
       const { data } = await petCenterApi.put( '/auth/password-profile', payload );
       dispatch({ type: types.onShowMessageSuccess, payload: data.msg });
-      console.log(data);
 
     } catch (error) {
-      console.log(error)
       dispatch({ type: types.onShowMessageError, payload: error.response.data.msg })
     }
   }
