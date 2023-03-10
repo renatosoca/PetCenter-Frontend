@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useForm, useResetPassword } from '../../hooks';
-import { LoadingSpinner, WarningMessage } from '../../components';
+import { LoadingSpinner, SuccessMessage, WarningMessage } from '../../components';
 
 const initialForm = {
   password: '',
@@ -24,30 +24,8 @@ export const ResetPassPage = () => {
   } = useForm( initialForm, formValitadions );
 
   const { 
-    status, errorMessage, isFormSubmit, handleSubmit, startValidateToken 
+    status, errorMessage, successMessage, isFormSubmit, handleSubmit 
   } = useResetPassword( formState, isFormValid, token, onResetForm );
-  
-/* 
-  const handleSubmitNewPassword = async e => {
-    e.preventDefault();
-    if ( !password ) return setObjAlert( { msg: 'La contraseña es Obligatorio', error: true });
-    if ( !repeatPassword ) return setObjAlert( { msg: 'Por favor Confirma tu Contraseña', error: true });
-    if ( password !== repeatPassword ) return setObjAlert( { msg: 'Las contraseñas no son iguales', error: true });
-    if ( password.length < 6 && repeatPassword.length < 6 ) return setObjAlert( { msg: 'Su contraseña tiene que ser mínimo 6 caracteres', error: true });
-
-    try {
-      const url = `/veterinarios/olvide-password/${token}`;
-      const { data } = await petCenterApi.post( url, { password } );
-
-      setObjAlert( { msg: data.msg, error:false } );
-
-      setConfirmPassword( true );
-    } catch (error) {
-      setObjAlert( { msg: error.response.data.msg, error:true } )
-    };
-  };
-
-  const { msg } = objAlert; */
 
   return (
     <>
@@ -61,6 +39,8 @@ export const ResetPassPage = () => {
             onSubmit={ handleSubmit }
             className='w-full py-10 flex flex-col gap-4 text-white relative'
           >
+            { !!successMessage && <SuccessMessage title={ false } messageSuccess={ successMessage } /> }
+
             <div className="">
               <label 
                 htmlFor="password"
