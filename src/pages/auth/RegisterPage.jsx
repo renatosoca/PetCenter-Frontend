@@ -1,31 +1,12 @@
 import { Link } from 'react-router-dom';
-
 import { LoadingSpinner, SuccessMessage, WarningMessage } from '../../components';
+import { initialFormRegister, valitadionsFormRegister } from '../../data';
 import { useForm, useRegister } from '../../hooks';
 
-const initialForm = {
-  name: '',
-  lastname: '',
-  email: '',
-  phone: '',
-  password: '',
-  repeatPassword: '',
-}
-
 export const RegisterPage = () => {
-
-  const formValitadions = {
-    name: [ (name) => name.length > 0, 'El nombre es obligatorio.' ],
-    lastname: [ (lastname) => lastname.length > 0, 'El apellido es obligatorio.' ],
-    email: [ (email) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(email), 'Tiene que ser un email válido.' ],
-    phone: [ (phone) => phone.length > 8, 'La telefono debe contener un mínimo de 9 caracteres.' ],
-    password: [ (password) => password.length > 7, 'La contraseña debe contener un mínimo de 8 caracteres.' ],
-    repeatPassword: [ (repeatPassword, password) => repeatPassword !== password > 7, 'Las contraseñas no coinciden.' ],
-  }
-  
   const { 
     formState, name, lastname, phone, email, password, repeatPassword, onInputChange, isFormValid, nameValid, lastnameValid, emailValid, phoneValid, passwordValid, repeatPasswordValid, onResetForm
-  } = useForm( initialForm, formValitadions );
+  } = useForm( initialFormRegister, valitadionsFormRegister );
 
   const { status, errorMessage, isFormSubmit, successMessage, handleSubmitRegister } = useRegister( formState, isFormValid, onResetForm );
 

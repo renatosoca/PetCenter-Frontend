@@ -1,50 +1,26 @@
 import { useState, useEffect, useContext } from 'react';
 import ReactModal from 'react-modal';
-
 import { UiContext } from '../../context';
+import { initialFormModalPatient, validationsFormModalPatient } from '../../data';
 import { useForm, usePatientModal } from '../../hooks';
+import { stylesModalPatient } from '../../styles';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    transform: "translate(-50%, -50%)",
-  },
-};
 ReactModal.setAppElement("#root");
-
-const initialState = {
-  name: "",
-  owner: "",
-  email: "",
-  date: "",
-  symptoms: "",
-};
 
 export const Modal = () => {
   const { modalPatient, startCloseModal } = useContext( UiContext );
 
-  const formValidations = {
-    name: [ (name) => name.length > 0, "El nombre es obligatorio" ],
-    owner: [ (value) => value.length > 0, "El propietario es obligatorio" ],
-    email: [ (email) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(email), 'Tiene que ser un email válido.' ],
-    date: [ (value) => value.length > 0, "La fecha es obligatoria" ],
-    symptoms: [ (value) => value.length > 0, "Los síntomas son obligatorios" ]
-  }
-
-  const [ formValues, setFormValues ] = useState(initialState);
+  const [ formValues, setFormValues ] = useState(initialFormModalPatient);
 
   const { 
-    formState, name, owner, email, date, symptoms, isFormValid, nameValid, ownerValid, emailValid, dateValid, symptomsValid, onInputChange, onResetForm
-  } = useForm( formValues, formValidations );
+    formState, name, owner, email, visitDate, symptoms, isFormValid, nameValid, ownerValid, emailValid, visitDateValid, symptomsValid, onInputChange, onResetForm
+  } = useForm( formValues, validationsFormModalPatient );
 
   const { 
     isFormSubmit, isLoadingAction, activePatient, handleSubmit
-  } = usePatientModal( formState, isFormValid, onResetForm, startCloseModal );
-
+  } = usePatientModal( formState, isFormValid, onResetForm );
+  
   useEffect(() => {
     if ( activePatient !== null ) setFormValues( activePatient );
   }, [ activePatient ]);
@@ -54,7 +30,7 @@ export const Modal = () => {
       isOpen={modalPatient}
       onRequestClose={startCloseModal}
       closeTimeoutMS={200}
-      style={customStyles}
+      style={stylesModalPatient}
       overlayClassName="modal-fondo"
       className={`min-w-[35rem] absolute overflow-auto px-4 py-6 border-none outline-none bg-slate-50`}
     >
@@ -123,20 +99,19 @@ export const Modal = () => {
         </div>
 
         <div className="">
-          <label htmlFor="date" className=" text-xs">
+          <label htmlFor="visitDate" className=" text-xs">
             Fecha de Alta
           </label>
 
           <input
             type="date"
-            id="date"
-            placeholder="Tu número de celular"
-            name="date"
-            value={date}
+            id="visitDate"
+            name="visitDate"
+            value={visitDate}
             onChange={onInputChange}
             className="w-full py-[0.65rem] px-3 rounded-[.2rem] outline-none bg-gray-400 placeholder:text-black placeholder:text-sm"
           />
-          <span className="text-red-500">{isFormSubmit && dateValid}</span>
+          <span className="text-red-500">{isFormSubmit && visitDateValid}</span>
         </div>
 
         <div className="">

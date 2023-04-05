@@ -1,21 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useForm, useLogin } from '../../hooks';
 import { LoadingSpinner, WarningMessage } from '../../components';
-
-const initialForm = {
-  email: '',
-  password: '',
-}
+import { initialFormLogin, valitadionsFormLogin } from '../../data';
 
 export const LoginPage = () => {
-  const formValitadions = {
-    email: [ (email) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(email), 'Tiene que ser un email válido.' ],
-    password: [ (password) => password.length > 7, 'La contraseña debe contener un mínimo de 8 caracteres.' ],
-  }
-
   const { 
     formState, email, password, onInputChange, isFormValid, emailValid, passwordValid, onResetForm
-  } = useForm( initialForm, formValitadions );
+  } = useForm( initialFormLogin, valitadionsFormLogin );
 
   const { handleSubmitLogin, status, errorMessage, isFormSubmit } = useLogin( formState, isFormValid, onResetForm );
 

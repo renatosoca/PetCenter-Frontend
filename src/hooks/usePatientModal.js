@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { PatientContext } from "../context";
 
-export const usePatientModal = ( formState, isFormValid, onResetForm, startCloseModal ) => {
+export const usePatientModal = ( formState, isFormValid, onResetForm ) => {
 
   const { errorMessage, isLoadingAction, activePatient, startSavedPatient } = useContext( PatientContext );
 
@@ -14,7 +14,6 @@ export const usePatientModal = ( formState, isFormValid, onResetForm, startClose
     if (!isFormValid ) return;
 
     startSavedPatient( formState );
-    startCloseModal();
     setFormSubmit(false);
     onResetForm();
   }

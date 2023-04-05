@@ -1,32 +1,20 @@
 import { useEffect, useState } from "react";
 import { LoadingSpinner, SuccessMessage, WarningMessage } from "../../components";
+import { initialFormUserProfile, validationsFormUserProfile } from "../../data";
 import { useForm, useAuth } from "../../hooks";
 
-const initialForm = {
-  name: "",
-  lastname: "",
-  email: "",
-  phone: "",
-  webPage: "",
-};
-
 export const AdminUsersPage = () => {
-  const formValidations = {
-    name: [ (name) => name.length > 0, "El nombre es obligatorio" ],
-    lastname: [ (lastname) => lastname.length > 0, "El apellido es obligatorio" ],
-    email: [ (email) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(email), 'Tiene que ser un email válido.' ],
-  };
   const { user, isLoading, successMessage, errorMessage, startUpdateProfile } = useAuth();
 
-  const [formValues, setFormValues] = useState(initialForm);
+  const [formValues, setFormValues] = useState(initialFormUserProfile);
   const [ isFormSubmit , setIsFormSubmit ] = useState(false);
 
   const { 
-    formState, name, lastname, email, phone, webPage, isFormValid, nameValid, lastnameValid, emailValid, onInputChange 
-  } = useForm( formValues,formValidations );
-
+    formState, name, lastname, email, phone, address, isFormValid, nameValid, lastnameValid, emailValid, onInputChange 
+  } = useForm( formValues,validationsFormUserProfile );
+  
   useEffect(() => {
-    setFormValues(user);
+    if ( user !== null ) setFormValues(user);
   }, [user]);
 
   const handleSubmitProfile = async (e) => {
@@ -119,16 +107,16 @@ export const AdminUsersPage = () => {
             </div>
 
             <div className="">
-              <label htmlFor="webPage" className=" text-xs">
+              <label htmlFor="address" className=" text-xs">
                 Pagina Web
               </label>
 
               <input
                 type="text"
-                id="webPage"
+                id="address"
                 placeholder="Tu Pagina Web"
-                name="webPage"
-                value={webPage}
+                name="address"
+                value={address}
                 onChange={onInputChange}
                 className="w-full py-[0.65rem] px-3 rounded-[.2rem] outline-none bg-[#2E2F36] text-white"
               />

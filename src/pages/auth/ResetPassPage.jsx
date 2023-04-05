@@ -1,27 +1,16 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useForm, useResetPassword } from '../../hooks';
 import { LoadingSpinner, SuccessMessage, WarningMessage } from '../../components';
-
-const initialForm = {
-  password: '',
-  repeatPassword: '',
-}
+import { initialFormResetPass, valitadionsFormResetPass } from '../../data';
 
 export const ResetPassPage = () => {
-
-  const formValitadions = {
-    password: [ (password) => password.length > 7, 'La contraseña debe contener un mínimo de 8 caracteres.' ],
-    repeatPassword: [ (repeatPassword, password) => repeatPassword === password, 'Las contraseñas no coinciden' ],
-  }
-  
   const params = useParams();
   const { token } = params;
   
   const { 
     formState, password, repeatPassword, isFormValid, passwordValid, repeatPasswordValid, onInputChange, onResetForm 
-  } = useForm( initialForm, formValitadions );
+  } = useForm( initialFormResetPass, valitadionsFormResetPass );
 
   const { 
     status, errorMessage, successMessage, isFormSubmit, handleSubmit 
@@ -52,7 +41,7 @@ export const ResetPassPage = () => {
               <input 
                 type="password" 
                 id="password" 
-                placeholder="Tu contraseña"
+                placeholder="Tu nueva contraseña"
                 name='password'
                 value={ password }
                 onChange={ onInputChange }
@@ -72,7 +61,7 @@ export const ResetPassPage = () => {
               <input 
                 type="password" 
                 id="repeatPassword" 
-                placeholder="Tu contraseña"
+                placeholder="Repetir tu nueva contraseña"
                 name='repeatPassword'
                 value={ repeatPassword }
                 onChange={ onInputChange }

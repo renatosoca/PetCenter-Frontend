@@ -1,51 +1,39 @@
-import { useEffect } from "react";
+import { useContext } from "react";
 import { createContext, useReducer } from "react"
 import { petCenterApi } from "../api";
-import { useAuth } from "../hooks";
+import { initialStatePatientContext } from "../data";
 import { types } from "../types";
 import { patientReducer } from "./patientReducer";
+import { UiContext } from "./UiContext";
 
 export const PatientContext = createContext();
 
-const initialState = {
-  isLoadingPatients: false,
-  isLoadingAction: false,
-  patients: [],
-  activePatient: null,
-  isSavedPatient: 'notSaved',
-}
-
-//Show Error Message - Optionals
 export const PatientProvider = ({ children }) => {
-  const [ patientState, dispatch ] = useReducer( patientReducer, initialState );
-  const { user } = useAuth();
+  const { startCloseModal } = useContext( UiContext );
+  const [ patientState, dispatch ] = useReducer( patientReducer, initialStatePatientContext );
+  
+  const startGetPatients = async () => {
+    try {
+      dispatch({ type: types.onLoadingPatients });
 
-  useEffect(() => {
-    const startGetPatients = async () => {
-      try {
-        dispatch({ type: types.onLoadingPatients });
+      const { data } = await petCenterApi.get( '/patient' );
+      dispatch( { type: types.onGetPatients, payload: data.patients } )
 
-        const { data } = await petCenterApi.get( '/patient' );
-        dispatch( { type: types.onGetPatients, payload: data.patients } )
-
-      } catch (error) {
-        console.error(error.response.data.msg);
-      }
+    } catch (error) {
+      console.error(error.response.data.msg);
     }
-    startGetPatients();
-  }, [user])
+  }
   
   const startActivePatient = ( patient ) => {
     dispatch( { type: types.onActivePatient, payload: patient } );
   }
 
-  //Show Error Message - Optionals
   const startSavedPatient = async ( payload ) => {
     try {
       dispatch({ type: types.onLoadingAction });
 
       if ( payload._id ) {
-  
+        
         const { data } = await petCenterApi.put( `/patient/${ payload._id }`, payload );
         dispatch( { type: types.onUpdatePatient, payload: data.patient } );
           
@@ -57,10 +45,11 @@ export const PatientProvider = ({ children }) => {
       
     } catch (error) {
       console.error(error.response.data.msg)
+    } finally {
+      startCloseModal();
     }
   }
 
-  //Show Error Message - Optionals
   const startDeletePatient = async ( _id ) => {
     try {
       dispatch({ type: types.onLoadingAction });
@@ -73,7 +62,7 @@ export const PatientProvider = ({ children }) => {
     }
   }
 
-  const startLogoutPatient = async () => {
+  const startLogoutPatient = () => {
     dispatch({ type: types.onLogoutPatient });
   }
 
@@ -81,6 +70,7 @@ export const PatientProvider = ({ children }) => {
     <PatientContext.Provider value={{
       ...patientState,
 
+      startGetPatients,
       startActivePatient,
       startSavedPatient,
       startDeletePatient,

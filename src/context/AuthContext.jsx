@@ -1,33 +1,24 @@
 import { useReducer, createContext } from "react";
 
 import { petCenterApi } from "../api";
+import { initialStateAuthContext } from "../data";
 import { types } from "../types";
 import { authReducer } from "./authReducer";
 
 export const AuthContext = createContext();
 
-const initialState = {
-  status: "init",
-  isLoading: 'none',
-  user: {},
-  errorMessage: null,
-  successMessage: null,
-  errorSystem: null,
-};
-
 export const AuthProvider = ({ children }) => {
-  const [authState, dispatch] = useReducer(authReducer, initialState);
+  const [authState, dispatch] = useReducer(authReducer, initialStateAuthContext);
 
   const startLogin = async ({ email, password} ) => {
     try {
       dispatch({ type: types.onChecking });
 
       const { data } = await petCenterApi.post( "/auth/login", { email, password } );
-      localStorage.setItem( "token", data.jwt );
-      localStorage.setItem( "time-token-start", new Date().getTime() );
+      localStorage.setItem( "petToken", data.jwt );
 
-      const { _id, name, lastname, phone, webPage } = data;
-      dispatch({ type: types.onLogin, payload: { _id, name, lastname, email, phone, webPage } });
+      const { _id, name, lastname, phone, address } = data.user;
+      dispatch({ type: types.onLogin, payload: { _id, name, lastname, email, phone, address } });
 
     } catch (error) {
       dispatch({ type: types.onLogout, payload: error.response.data.msg });
@@ -35,8 +26,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const startLogout = async () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("time-token-start");
+    localStorage.removeItem("petToken");
 
     dispatch({ type: types.onLogout });
   }
@@ -54,16 +44,15 @@ export const AuthProvider = ({ children }) => {
   }
 
   const startChecking = async () => {
-    const token = localStorage.getItem("token") || null;
+    const token = localStorage.getItem("petToken") || '';
     if ( !token ) return dispatch({ type: types.onLogout });
     
     try {
-      const { data } = await petCenterApi.get( "/auth/renew" );
-      localStorage.setItem( "token", data.jwt );
-      localStorage.setItem( "time-token-start", new Date().getTime() );
+      const { data } = await petCenterApi.get( "/auth/revalidateAuth" );
+      localStorage.setItem( "petToken", data.jwt );
       
-      const { _id, name, lastname, email, phone, webPage } = data;
-      dispatch({ type: types.onLogin, payload: { _id, name, lastname, email, phone, webPage } });
+      const { _id, name, lastname, email, phone, address } = data.user;
+      dispatch({ type: types.onLogin, payload: { _id, name, lastname, email, phone, address } });
 
     } catch (error) {
       dispatch({ type: types.onSystem, payload: error.response.data.msg });
@@ -73,23 +62,20 @@ export const AuthProvider = ({ children }) => {
   const startClearMessageError = () => {
     dispatch({ type: types.onclearMessageError });
   }
-
   const startClearMessageSuccess = () => {
     dispatch({ type: types.onClearSuccessMessage });
   }
-
   const startConfirmAccount = async (token) => {
     try {
       dispatch({ type: types.onChecking });
 
-      const { data } = await petCenterApi.get( `/auth/confirm/${token}` );
+      const { data } = await petCenterApi.get( `/auth/confirm-account/${token}` );
       dispatch({ type: types.onRegister, payload: data.msg });
 
     } catch (error) {
       dispatch({ type: types.onLogout, payload: error.response.data.msg });
     }
   }
-
   const startForgotPassword = async ({ email }) => {
     try {
       dispatch({ type: types.onChecking });
@@ -101,24 +87,24 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: types.onLogout, payload: error.response.data.msg });
     }
   }
-
-  //Opcional
   const startValidateToken = async ( token ) => {
     try {
 
-      const { data } = await petCenterApi.get( `/auth/reset-password/${token}` );
+      await petCenterApi.get( `/auth/reset-password/${token}` );
       
     } catch (error) {
       dispatch({ type: types.onLogout, payload: error.response.data.msg });
     }
   }
-
   const startResetPassword = async ({ token, password }) => {
     try {
       dispatch({ type: types.onChecking });
 
       const { data } = await petCenterApi.post( `/auth/reset-password/${token}`, { password } );
-      dispatch({ type: types.onRegister, payload: data.msg });
+      localStorage.setItem( "petToken", data.jwt );
+
+      const { _id, name, lastname, email, phone, address } = data.user;
+      dispatch({ type: types.onLogin, payload: { _id, name, lastname, email, phone, address } });
 
     } catch (error) {
       dispatch({ type: types.onLogout, payload: error.response.data.msg });
@@ -143,7 +129,7 @@ export const AuthProvider = ({ children }) => {
     try {
       dispatch({ type: types.onLoadingUser });
 
-      const { data } = await petCenterApi.put( '/auth/password-profile', payload );
+      const { data } = await petCenterApi.put( `/auth/password-profile/${ payload.id }`, payload );
       dispatch({ type: types.onShowMessageSuccess, payload: data.msg });
 
     } catch (error) {

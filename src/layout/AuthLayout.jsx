@@ -8,7 +8,7 @@ export const AuthLayout = () => {
   return (
     <>
       <main className='flex items-center justify-center xl:grid xl:grid-cols-2 min-h-screen w-full bg-[#1F2023]'>
-        { status === 'authenticated' ? <Navigate to='/admin/' /> : <Outlet /> }
+        { status === 'authenticated' ? <Navigate to='/admin' /> : <Outlet /> }
       </main>
     </>
   )

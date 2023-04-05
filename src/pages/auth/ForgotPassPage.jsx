@@ -1,20 +1,12 @@
 import { Link } from 'react-router-dom';
-
 import { useForm, useForgotPassword } from '../../hooks';
 import { LoadingSpinner, SuccessMessage, WarningMessage } from '../../components';
-
-const initialForm = {
-  email: '',
-}
+import { initialFormForgotPass, valitadionsFormForgotPass } from '../../data';
 
 export const ForgotPassPage = () => {
-  const formValitadions = {
-    email: [ (email) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/).test(email), 'Tiene que ser un email válido.' ],
-  }
-
   const { 
     formState, email, isFormValid, emailValid, onInputChange, onResetForm 
-  } = useForm( initialForm, formValitadions );
+  } = useForm( initialFormForgotPass, valitadionsFormForgotPass );
 
   const { 
     status, errorMessage, successMessage, isFormSubmit, handleSubmit 

@@ -7,7 +7,7 @@ const petCenterApi = axios.create({
 petCenterApi.interceptors.request.use( config => {
   config.headers = {
     ...config.headers,
-    Authorization: `Bearer ${ localStorage.getItem('token') || '' }`
+    Authorization: `Bearer ${ localStorage.getItem('petToken') || '' }`
   }
   return config;
 });

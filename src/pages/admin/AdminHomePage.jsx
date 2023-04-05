@@ -1,21 +1,15 @@
 import { useContext } from 'react';
-import { useEffect, useState } from 'react';
 import { Modal, PatientList } from '../../components';
-
 import { UiContext } from '../../context';
 import { useAdmin } from '../../hooks';
 
 export const AdminHomePage = () => {
 
   const { startOpenModal } = useContext( UiContext );
-  const { startGetPatients, startActivePatient } = useAdmin();
-
-  /* useEffect(() => {
-    startGetPatients();
-  }, []); */
+  const { startActivePatient } = useAdmin();
 
   const handleNewPatient = () => {
-    startActivePatient({ name: '', owner: '', email: '', date: '', symptoms: '' });
+    startActivePatient({ name: '', owner: '', email: '', visitDate: '', symptoms: '' });
     startOpenModal();
   }
 
@@ -24,7 +18,7 @@ export const AdminHomePage = () => {
       <div className='flex justify-end'>
         <button
           type='button'
-          className='text-white bg-slate-700 py-2 px-3 rounded-md font-medium'
+          className='text-white bg-[#263159] hover:bg-[#324592] py-2 px-3 rounded font-medium transition-colors'
           onClick={ handleNewPatient }
         >
           Agregar Paciente

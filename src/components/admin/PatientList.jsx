@@ -16,39 +16,38 @@ export const PatientList = () => {
         <table className="table-auto min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase">
+              <th className="px-2 py-3 text-xs font-bold text-gray-700 uppercase">
                 Mascota
               </th>
-              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-3 text-xs font-bold text-gray-700 uppercase tracking-wider">
                 Propietario
               </th>
-              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-3 text-xs font-bold text-gray-700 uppercase tracking-wider">
                 Correo
               </th>
-              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-3 text-xs font-bold text-gray-700 uppercase tracking-wider">
                 Fecha
               </th>
-              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-3 text-xs font-bold text-gray-700 uppercase tracking-wider">
                 Sintomas
               </th>
-              <th className="px-2 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-2 py-3 text-xs font-bold text-gray-700 uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-
-            { isLoadingPatients ? (<SkeletonPatients />) 
-              : ( patients?.length > 0 && (
-                  patients.map( (patient) => (
-                    <Patients key={patient._id} patient={patient} />
-                  ))
-                )
-              || patients?.length === 0 && (<tr><td className="absolute text-center w-full">En este espacio se mostrarán tus pacientes</td></tr>)) 
+            {isLoadingPatients ? 
+              <SkeletonPatients />  :
+              ( patients?.length > 0 && (
+                patients.map( (patient) => (
+                  <Patients key={patient._id} patient={patient} />
+                ))
+              ))
             }
-
           </tbody>
         </table>
+        {patients?.length <= 0 && <div className="text-center w-full">En este espacio se mostrarán tus pacientes</div>}
       </div>
     </>
   );

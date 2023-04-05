@@ -24,7 +24,7 @@
 }
 ::-webkit-scrollbar {
     width: .4rem;
-    height: .2rem;
+    height: .5rem;
     background-color: #4b4d53;
 }
 ::-webkit-scrollbar-thumb {
