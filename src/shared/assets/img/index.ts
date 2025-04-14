@@ -1,0 +1,5 @@
+export * from './avatar-1.png'
+export * from './error404.png'
+export * from './error500.png'
+export * from './twoCone.png'
+export * from './welcome-banner.png'

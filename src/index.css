@@ -1,61 +1,170 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
-.container {
-    max-width: 100%;
-    width: 95%;
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
-.bg-image-gradient-left{
-    background: linear-gradient(90deg, rgba(31,32,35,1) 0%, rgba(31,32,35,1) 2%, rgba(31,32,35,1) 4%, rgba(31,32,35,1) 7%, rgba(31,32,35,1) 9%, rgba(28,54,56,0) 100%), url(/dog_cat.jpg) no-repeat top center;
-    background-size: cover;
-    opacity: .8;
-}
-.bg-image-gradient-rigth{
-    background: linear-gradient(90deg,rgba(28,54,56,0) 0%, rgba(31,32,35,1) 92%, rgba(31,32,35,1) 94%, rgba(31,32,35,1) 96%, rgba(31,32,35,1) 98%, rgba(31,32,35,1) 100% ), url(/dog_cat.jpg) no-repeat top center;
-    background-size: cover;
-    opacity: .8;
-}
-.scrollbar-hidden::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-    background-color: transparent;
-}
-::-webkit-scrollbar {
-    width: .4rem;
-    height: .5rem;
-    background-color: #4b4d53;
-}
-::-webkit-scrollbar-thumb {
-    background-color: #161B22;
-    border-radius: .5rem;
-}
-.scroll-admin-layout::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-    background-color: blue;
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
-.ReactModalPortal > div{
-    opacity: 0;
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* customized theme */
+@theme {
+  --font-sans: 'Public Sans Variable', 'Nunito', 'Arial', sans-serif;
+  --font-public-sans: 'Public Sans Variable';
+
+  --color-primary: #009688;
+  --color-secondary: #1888ee;
+  --color-hover-primary: #00897b;
+  --color-hover-secondary: #0f77d4;
+  --color-disabled-primary: #8c8c8c;
+  --color-disabled-secondary: #b7c4cf;
+  --color-default-bg: #fafafb;
+  --color-primary-bg: #e3fdff;
+  --color-secondary-bg: #f5f5f5;
+  --color-tertiary-bg: #f0f0f0;
+
+  --radius-primary: 0.2rem;
+
+  /* --container-2xl: 1400px; */
+
+  --animate-slide-fade: slide-fade 1s linear infinite;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes slide-fade {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(300%);
+    }
   }
-  .ReactModalPortal .ReactModal__Overlay {
-    transition: opacity .3s ease-in-out;
-    z-index: 999;
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
   }
-  .ReactModalPortal .ReactModal__Overlay--after-open {
-    opacity: 1;
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
   }
-  .ReactModalPortal .ReactModal__Overlay--before-close {
-    opacity: 0;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-.modal-fondo {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(31,32,35,.6);
+  body {
+    @apply bg-background text-foreground;
+  }
 }
