@@ -2,7 +2,7 @@ import { IErrorPageInterface, IGetErrorPageInterface, RequestError } from '@/dom
 import { TDispatchApp } from '@/store'
 import { getGlobalErrorPage } from './global-error-page'
 
-interface IGlobalErrorHandlerPropsReturn<T = any> {
+interface IGlobalErrorHandlerPropsReturn<T = unknown> {
   dispatchGlobal: TDispatchApp
   error: RequestError<string>
   additionalInformation?: T

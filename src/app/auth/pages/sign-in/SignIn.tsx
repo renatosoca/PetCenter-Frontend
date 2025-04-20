@@ -1,10 +1,18 @@
-import { Button, Input } from '@/shared/components'
 import { Link } from 'react-router-dom'
+import { Button, Input } from '@/shared/components'
+import { useHandleForm } from '@/shared/hooks'
+import { INITIAL_STATE_SIGNIN, ISignIn } from '../../domain'
+import { SignInService } from '../../services'
+import { SIGNIN_VALIDATION } from '../../validations'
 
-const noopFunction = () => {
-  return
-}
 const SignIn = () => {
+  const { params, errors, onInputChange, onSubmit } = useHandleForm(INITIAL_STATE_SIGNIN, SIGNIN_VALIDATION)
+
+  const handleLogin = async (data: ISignIn) => {
+    console.log({ data })
+    await SignInService.signIn()
+  }
+
   return (
     <main className="flex items-center justify-center lg:grid lg:grid-cols-12 min-h-screen w-full">
       <div className="col-span-7 h-full ">
@@ -13,13 +21,27 @@ const SignIn = () => {
 
       <div className="col-span-5 lg px-5 py-10 max-w-xl w-full mx-auto">
         <div>
-          <h1 className="uppercase text-center italic font-bold">Bienvenido</h1>
+          <h1 className="uppercase text-center font-bold">Bienvenido</h1>
         </div>
 
-        <form onSubmit={noopFunction} className="w-full py-16 flex flex-col gap-7 relative">
-          <Input label="Correo electrónico" name="email" type="email" />
+        <form onSubmit={onSubmit(handleLogin)} className="w-full py-16 flex flex-col gap-7 relative">
+          <Input
+            label="Correo electrónico"
+            name="email"
+            type="email"
+            value={params.email}
+            onChange={onInputChange}
+            error={errors && errors.email}
+          />
 
-          <Input label="Contraseña" name="password" type="password" onChange={noopFunction} />
+          <Input
+            label="Contraseña"
+            name="password"
+            type="password"
+            value={params.password}
+            onChange={onInputChange}
+            error={errors && errors.password}
+          />
 
           <Button type="submit">
             <span>Iniciar sesión</span>

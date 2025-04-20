@@ -1,2 +1,3 @@
 export * from './useFirstRender'
-export * from './useParamsHandle'
+export * from './useHandleForm'
+export * from './useHandleParams'

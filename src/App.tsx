@@ -13,9 +13,9 @@ function App() {
   return (
     <ErrorBoundary pathname={window.location.pathname} error={error}>
       <RouteWithNotFound>
-        <Route path="/" element={<Navigate to={ModulePathRoutes.Auth} />} />
+        <Route path="/" element={<Navigate to={ModulePathRoutes.auth} />} />
 
-        <Route path={`${ModulePathRoutes.Auth}/*`} element={<AuthModuleRoutes />} />
+        <Route path={`${ModulePathRoutes.auth}/*`} element={<AuthModuleRoutes />} />
       </RouteWithNotFound>
     </ErrorBoundary>
   )

@@ -2,10 +2,10 @@ import { IErrorPageInterface, IGetErrorPageInterface } from '@/domain'
 
 export const getGlobalErrorPage = ({
   code,
-  onClickCallback,
   status,
+  title,
   message,
-  title
+  onClickCallback
 }: IGetErrorPageInterface): IErrorPageInterface => {
   switch (status) {
     case 401:

@@ -1,9 +1,15 @@
 import { ModulePathRoutes } from '@/domain'
 
 export enum AuthRoutes {
-  Login = '/sign-in'
+  signin = '/sign-in',
+  signup = '/sign-up',
+  forgotPassword = '/forgot-password',
+  profile = '/profile'
 }
 
 export enum AuthPages {
-  Login = ModulePathRoutes.Auth + AuthRoutes.Login
+  signin = ModulePathRoutes.auth + AuthRoutes.signin,
+  signup = ModulePathRoutes.auth + AuthRoutes.signup,
+  forgotPassword = ModulePathRoutes.auth + AuthRoutes.forgotPassword,
+  profile = ModulePathRoutes.auth + AuthRoutes.profile
 }

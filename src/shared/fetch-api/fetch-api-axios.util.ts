@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { apiBaseUrl } from '@/app.globals'
 
-export class ApiProxy {
+export class fetchApi {
   private api: AxiosInstance
 
   constructor(baseURL: string = `${apiBaseUrl}/api`) {
@@ -19,12 +19,12 @@ export class ApiProxy {
     return response
   }
 
-  async post<T>(uri: string, data: any, config?: AxiosRequestConfig) {
+  async post<T>(uri: string, data: unknown, config?: AxiosRequestConfig) {
     const response = await this.api.post<T>(uri, data, { ...(config && { ...config }) })
     return response
   }
 
-  async put<T>(uri: string, data: any, config?: AxiosRequestConfig) {
+  async put<T>(uri: string, data: unknown, config?: AxiosRequestConfig) {
     const response = await this.api.put<T>(uri, data, { ...(config && { ...config }) })
     return response
   }

@@ -1,3 +1,5 @@
+export type TypeWithKey<T> = { [key: string]: T }
+
 export interface RequestError<T> {
   code: T
   message: string
@@ -19,7 +21,7 @@ export interface IErrorPageInterface {
 
 type PresentationTypes = 'none' | 'page' | 'modal' | 'dialog'
 
-export interface IGetErrorPageInterface<T = any> extends RequestError<string> {
+export interface IGetErrorPageInterface<T = unknown> extends RequestError<string> {
   onClickCallback: ({ buttonLabel }: { buttonLabel: string }) => void
   additionalInformation?: T
 }

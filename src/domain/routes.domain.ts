@@ -1,3 +1,3 @@
 export enum ModulePathRoutes {
-  Auth = '/auth'
+  auth = '/auth'
 }

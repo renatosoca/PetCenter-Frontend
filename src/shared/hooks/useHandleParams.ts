@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 
-export const useParamsHandle = <T extends Object>(initState: T, reset: (values: T) => void) => {
+export const useHandleParams = <T extends object>(initState: T, reset: (values: T) => void) => {
   const [params, setParams] = useState<T>(initState)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
