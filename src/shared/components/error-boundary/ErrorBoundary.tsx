@@ -15,12 +15,14 @@ const ErrorBoundary: FC<ErrorBoundaryProps> = ({ children, pathname, error, onEr
 
   useEffect(() => {
     if (error && onError) onError(error)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error])
 
   useEffect(() => {
     if (isFirstRender) return
 
     if (error && onClearError) onClearError(error)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
   return (

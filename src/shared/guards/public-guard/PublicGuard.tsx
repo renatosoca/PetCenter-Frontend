@@ -4,9 +4,8 @@ import { PropsWithChildren } from 'react'
 import { Navigate } from 'react-router-dom'
 import { PatientModulePages } from '../../../app/patient/domain'
 
-const AuthGuard = ({ children }: PropsWithChildren) => {
+const PublicGuard = ({ children }: PropsWithChildren) => {
   const { user } = useAppStateContext()
-  console.log(user)
   const lastPath = getStorage(STORAGE_NAMES.lastPage)
 
   return (
@@ -17,4 +16,4 @@ const AuthGuard = ({ children }: PropsWithChildren) => {
   )
 }
 
-export default AuthGuard
+export default PublicGuard
