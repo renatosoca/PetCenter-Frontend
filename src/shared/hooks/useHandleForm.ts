@@ -8,6 +8,7 @@ export const useHandleForm = <T extends object>(initialForm: T, validations?: IV
 
   useEffect(() => {
     if (isSubmitted) runValidations()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params])
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export const useHandleForm = <T extends object>(initialForm: T, validations?: IV
       const isValid = runValidations()
       if (!isValid) return
 
-      const values = getFormValues(e)
+      const values = structuredClone(getFormValues(e))
       callback(values)
     }
   }

@@ -3,7 +3,7 @@ import { TDispatchApp } from '@/store'
 import { getGlobalErrorPage } from './global-error-page'
 
 interface IGlobalErrorHandlerPropsReturn<T = unknown> {
-  dispatchGlobal: TDispatchApp
+  dispatchApp: TDispatchApp
   error: RequestError<string>
   additionalInformation?: T
 }
@@ -12,7 +12,7 @@ type TErrorPageDetail = (errorPage: IGetErrorPageInterface) => IErrorPageInterfa
 type TGlobalErrorhandler = (errorHandler: IGlobalErrorHandlerPropsReturn) => void
 
 export const globalErrorHandler = (errorPage: TErrorPageDetail): TGlobalErrorhandler => {
-  return ({ dispatchGlobal, error, additionalInformation }: IGlobalErrorHandlerPropsReturn): void => {
+  return ({ dispatchApp, error, additionalInformation }: IGlobalErrorHandlerPropsReturn): void => {
     if (!error) return
 
     const { code, message, status, title } = error
@@ -42,7 +42,7 @@ export const globalErrorHandler = (errorPage: TErrorPageDetail): TGlobalErrorhan
 
           default:
             if (buttonLabel === 'Try again') {
-              dispatchGlobal({ type: 'ClearError' })
+              dispatchApp({ type: 'ClearError' })
             }
             console.log('Unknown error default')
             break
@@ -52,7 +52,7 @@ export const globalErrorHandler = (errorPage: TErrorPageDetail): TGlobalErrorhan
 
     if (status === 401) console.log('Sesión expirada')
 
-    dispatchGlobal({ type: 'ErrorFetching', payload: errorPageDetail })
+    dispatchApp({ type: 'ErrorFetching', payload: errorPageDetail })
   }
 }
 

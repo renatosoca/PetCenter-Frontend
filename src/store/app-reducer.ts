@@ -1,11 +1,13 @@
 import { Dispatch } from 'react'
 import { produce, Draft } from 'immer'
-import { IAppState, IErrorPageInterface } from '@/domain'
+import { IAppState, IErrorPageInterface, IUser } from '@/domain'
 
 export type TDispatchApp = Dispatch<AppActionType>
 
 type AppActionType =
   | { type: 'IsFetching' }
+  | { type: 'FinishFetching' }
+  | { type: 'UserAuthenticated'; payload: IUser }
   | { type: 'ErrorFetching'; payload: IErrorPageInterface }
   | { type: 'ClearError' }
 
@@ -13,11 +15,23 @@ export const appReducer = produce((draft: Draft<IAppState>, action: AppActionTyp
   switch (action.type) {
     case 'IsFetching':
       return {
-        ...draft
+        ...draft,
+        isFetching: true
+      }
+    case 'FinishFetching':
+      return {
+        ...draft,
+        isFetching: false
+      }
+    case 'UserAuthenticated':
+      return {
+        ...draft,
+        user: action.payload
       }
     case 'ErrorFetching':
       return {
         ...draft,
+        isFetching: false,
         error: action.payload
       }
     case 'ClearError':

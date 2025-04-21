@@ -1,3 +1,4 @@
 export enum ModulePathRoutes {
-  auth = '/auth'
+  auth = '/auth',
+  patient = '/patient'
 }

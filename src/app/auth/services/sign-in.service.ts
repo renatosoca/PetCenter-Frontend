@@ -1,11 +1,36 @@
 import { petCenterApi } from '@/app.globals'
+import { IResponseLogin, ISignIn } from '../domain'
+import { COOKIE_NAMES, decodedToken, ErrorHandler, setCookie } from '@/shared/utils'
+import { IUser } from '@/domain'
 
-const signIn = async () => {
+interface signInProps {
+  user: IUser | undefined
+  error: ErrorHandler<string> | undefined
+}
+
+const signIn = async (data: ISignIn): Promise<signInProps> => {
+  const params = structuredClone(data)
   try {
-    const response = await petCenterApi.get('/auth/login')
-    console.log(response)
-  } catch (error) {
-    console.log(error)
+    const { data } = await petCenterApi.post<{ jwt: string }>('/auth/login', params)
+
+    setCookie(COOKIE_NAMES.auth, data.jwt)
+
+    const { user } = decodedToken<{ user: IResponseLogin }>(data.jwt)!
+
+    return {
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone
+      },
+      error: undefined
+    }
+  } catch (error: unknown) {
+    return {
+      user: undefined,
+      error: ErrorHandler.fromAxiosError<string>({ error, title: 'Sign In Error' })
+    }
   }
 }
 

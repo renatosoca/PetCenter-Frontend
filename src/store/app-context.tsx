@@ -1,12 +1,13 @@
 import { PropsWithChildren, createContext, useContext, useReducer } from 'react'
 import { IAppState, INITIAL_STATE_APP } from '@/domain'
 import { TDispatchApp, appReducer } from './app-reducer'
+import { getPersistentUser } from '@/shared/utils'
 
-export const AppStateContext = createContext<IAppState | undefined>(undefined)
-export const AppDispatchContext = createContext<TDispatchApp | undefined>(undefined)
+const AppStateContext = createContext<IAppState | undefined>(undefined)
+const AppDispatchContext = createContext<TDispatchApp | undefined>(undefined)
 
 export const AppProvider = ({ children }: PropsWithChildren) => {
-  const [state, dispatch] = useReducer(appReducer, INITIAL_STATE_APP)
+  const [state, dispatch] = useReducer(appReducer, INITIAL_STATE_APP, () => getPersistentUser())
 
   return (
     <AppStateContext.Provider value={state}>

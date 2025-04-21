@@ -12,8 +12,7 @@ export const setCookie = (cookieName: string, cookieValue: string) => {
   Cookies.set(cookieName, cookieValue, {
     expires: date,
     secure: true,
-    sameSite: 'Strict',
-    httpOnly: true
+    sameSite: 'strict'
   })
 }
 
