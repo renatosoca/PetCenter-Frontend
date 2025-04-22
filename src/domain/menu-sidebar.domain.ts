@@ -1,13 +1,13 @@
 import { Tag, Users, Settings, Bookmark, SquarePen, LayoutGrid, LucideIcon } from 'lucide-react'
 
-type Submenu = {
+export interface Submenu {
   href: string
   label: string
   Icon: LucideIcon
   active?: boolean
 }
 
-type Menu = {
+export interface Menu {
   href: string
   label: string
   active?: boolean
@@ -15,20 +15,19 @@ type Menu = {
   submenus?: Submenu[]
 }
 
-type Group = {
+export interface Group {
   groupLabel: string
   menus: Menu[]
 }
 
-export function getMenuList(pathname?: string): Group[] {
-  console.log({ pathname })
+export function getMenuList(): Group[] {
   return [
     {
-      groupLabel: '',
+      groupLabel: 'Paciente',
       menus: [
         {
-          href: '/dashboard',
-          label: 'Dashboard',
+          href: '/patient',
+          label: 'Pacientes',
           icon: LayoutGrid,
           submenus: []
         }

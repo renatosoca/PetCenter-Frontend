@@ -7,10 +7,12 @@ import { sidebarStore } from '@/store'
 import { SidebarToggle } from './sidebar-toggle'
 import { Menu } from './menu'
 
-export function Sidebar() {
+export const Sidebar = () => {
   const sidebar = useStore(sidebarStore, (x) => x)
   if (!sidebar) return null
-  const { isOpen, toggleSidebar, getOpenState, setIsHover, settings } = sidebar
+
+  const { isOpen, settings, toggleSidebar, getOpenState, setIsHover } = sidebar
+
   return (
     <aside
       className={cn(
@@ -19,6 +21,7 @@ export function Sidebar() {
         settings.disabled && 'hidden'
       )}>
       <SidebarToggle isOpen={isOpen} setIsOpen={toggleSidebar} />
+
       <div
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}

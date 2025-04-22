@@ -5,21 +5,23 @@ import { cn } from '@/shared/utils'
 import { Button, ScrollArea, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui'
 import { CollapseMenuButton } from './collapse-menu-button'
 import { MenuItem } from './menu-item'
+import { memo, useMemo } from 'react'
 
 interface MenuProps {
   isOpen: boolean | undefined
 }
 
-export function Menu({ isOpen }: MenuProps) {
+export const Menu = memo(({ isOpen }: MenuProps) => {
   const { pathname } = useLocation()
-  const menuList = getMenuList(pathname)
+
+  const menuList = useMemo(() => getMenuList(), [])
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
       <nav className="mt-4 h-full w-full">
         <ul className="flex flex-col min-h-[calc(100vh-48px-36px-16px-32px)] lg:min-h-[calc(100vh-32px-40px-32px)] items-start space-y-1 px-2">
           {menuList.map(({ groupLabel, menus }, index) => (
-            <li className={cn('w-full', groupLabel ? 'pt-5' : '')} key={index}>
+            <li key={index} className={cn('w-full', groupLabel && 'pt-5')}>
               {(isOpen && groupLabel) || isOpen === undefined ? (
                 <p className="text-sm font-medium text-muted-foreground px-4 pb-2 max-w-[248px] truncate">
                   {groupLabel}
@@ -40,6 +42,8 @@ export function Menu({ isOpen }: MenuProps) {
               ) : (
                 <p className="pb-2"></p>
               )}
+
+              {/* Menu Items */}
               {menus.map(({ href, label, icon: Icon, active, submenus }, index) =>
                 !submenus || submenus.length === 0 ? (
                   <div className="w-full" key={index}>
@@ -74,6 +78,7 @@ export function Menu({ isOpen }: MenuProps) {
               )}
             </li>
           ))}
+
           <li className="w-full grow flex items-end">
             <TooltipProvider disableHoverableContent>
               <Tooltip delayDuration={100}>
@@ -95,4 +100,4 @@ export function Menu({ isOpen }: MenuProps) {
       </nav>
     </ScrollArea>
   )
-}
+})

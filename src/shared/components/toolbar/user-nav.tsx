@@ -18,7 +18,7 @@ import {
   TooltipTrigger
 } from '../ui'
 
-export function UserNav() {
+export const UserNav = () => {
   return (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>

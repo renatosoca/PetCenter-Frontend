@@ -1,21 +1,23 @@
-import { PropsWithChildren, createContext, useContext, useReducer } from 'react'
+import { PropsWithChildren, createContext, memo, useContext, useMemo, useReducer } from 'react'
 import { IAppState, INITIAL_STATE_APP } from '@/domain'
 import { TDispatchApp, appReducer } from './app-reducer'
-import { getPersistentUser } from '@/shared/utils'
+import { getStateAppPersistent } from '@/shared/utils'
 
 const AppStateContext = createContext<IAppState | undefined>(undefined)
 const AppDispatchContext = createContext<TDispatchApp | undefined>(undefined)
 
-export const AppProvider = ({ children }: PropsWithChildren) => {
-  const [state, dispatch] = useReducer(appReducer, INITIAL_STATE_APP, () => getPersistentUser())
+const AppProvider = memo(({ children }: PropsWithChildren) => {
+  const initialState = useMemo(() => getStateAppPersistent(), [])
+  const [state, dispatch] = useReducer(appReducer, INITIAL_STATE_APP, () => initialState)
 
   return (
     <AppStateContext.Provider value={state}>
       <AppDispatchContext.Provider value={dispatch}>{children}</AppDispatchContext.Provider>
     </AppStateContext.Provider>
   )
-}
+})
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAppStateContext = () => {
   const context = useContext(AppStateContext)
 
@@ -24,6 +26,7 @@ export const useAppStateContext = () => {
   return context
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAppDispatchContext = () => {
   const context = useContext(AppDispatchContext)
 
@@ -31,3 +34,5 @@ export const useAppDispatchContext = () => {
 
   return context
 }
+
+export default AppProvider

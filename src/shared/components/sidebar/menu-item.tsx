@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { LucideIcon } from 'lucide-react'
 import { Button } from '@/shared/components'
 import { cn } from '@/shared/utils'
+import { memo } from 'react'
 
 interface MenuItemProps {
   active: boolean
@@ -13,7 +14,7 @@ interface MenuItemProps {
   isSubMenu?: boolean
 }
 
-export const MenuItem = ({ active, pathname, href, isOpen, Icon, label, isSubMenu }: MenuItemProps) => {
+export const MenuItem = memo(({ active, pathname, href, isOpen, Icon, label, isSubMenu }: MenuItemProps) => {
   return (
     <Button
       variant={(active === undefined && pathname.startsWith(href)) || active ? 'secondary' : 'ghost'}
@@ -34,4 +35,4 @@ export const MenuItem = ({ active, pathname, href, isOpen, Icon, label, isSubMen
       </Link>
     </Button>
   )
-}
+})

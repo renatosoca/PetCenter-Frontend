@@ -25,9 +25,9 @@ export class ErrorHandler<T> extends Error {
   public constructor({ code, title, message, status }: RequestError<T>) {
     super(message)
     this.code = code
+    this.message = message
     this.status = status
     this.title = title
-    this.message = message
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, ErrorHandler)

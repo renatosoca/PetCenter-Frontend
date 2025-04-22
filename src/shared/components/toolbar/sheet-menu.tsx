@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import { MenuIcon, PanelsTopLeft } from 'lucide-react'
 import { Button, Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '../ui'
-import { Menu } from './menu'
+import { Menu } from '../sidebar'
 
-export function SheetMenu() {
+export const SheetMenu = () => {
   return (
     <Sheet>
       <SheetTrigger className="lg:hidden" asChild>

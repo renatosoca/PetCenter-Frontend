@@ -1,6 +1,6 @@
 export * from './cookies.util'
 export * from './decoded-jwt.util'
 export * from './error-handler.util'
-export * from './get-persistent-user.util'
+export * from './get-state-persistent.util'
 export * from './storage.util'
 export * from './tailwind.util'

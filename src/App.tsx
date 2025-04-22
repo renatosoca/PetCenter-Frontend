@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 import { Navigate, Route } from 'react-router-dom'
-import { useAppStateContext } from './store'
 import { ModulePathRoutes } from './domain'
+import { useAppStateContext } from './store'
 
 const ErrorBoundary = lazy(() => import('@/shared/components/error-boundary/ErrorBoundary'))
 const RouteWithNotFound = lazy(() => import('@/shared/components/route-with-not-found/RouteWithNotFound'))
