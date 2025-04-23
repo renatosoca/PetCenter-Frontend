@@ -19,7 +19,6 @@ export const SidebarToggle = memo(({ isOpen, setIsOpen }: SidebarToggleProps) =>
           )}
         />
       </Button>
-      {/* Toggle sidebar */}
     </div>
   )
 })

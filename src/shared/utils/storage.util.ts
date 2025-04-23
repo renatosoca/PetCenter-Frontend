@@ -1,5 +1,6 @@
 export const STORAGE_NAMES = {
-  lastPage: 'last-page'
+  lastPage: 'last-page',
+  theme: 'app-theme'
 }
 
 export const getStorage = (key: string) => {
@@ -8,4 +9,8 @@ export const getStorage = (key: string) => {
 
 export const setStorage = (key: string, value: string) => {
   localStorage.setItem(key, value)
+}
+
+export const removeStorage = (key: string) => {
+  localStorage.removeItem(key)
 }

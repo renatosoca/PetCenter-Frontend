@@ -1,5 +1,7 @@
 import { IErrorPageInterface } from '.'
 
+export type TTheme = 'dark' | 'light' | 'system'
+
 export interface IUser {
   id: string
   name: string
@@ -10,12 +12,14 @@ export interface IUser {
 }
 
 export interface IAppState {
+  theme: TTheme
   isFetching: boolean
   user: IUser | undefined
   error?: IErrorPageInterface
 }
 
 export const INITIAL_STATE_APP: IAppState = {
+  theme: 'system',
   isFetching: false,
   user: undefined,
   error: undefined

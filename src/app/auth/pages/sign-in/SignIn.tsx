@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import { Button, Input } from '@/shared/components'
 import { useHandleForm } from '@/shared/hooks'
-import { useAppDispatchContext } from '@/store'
+import { showToast } from '@/shared/utils'
+import { useAppDispatchContext, useAppStateContext } from '@/store'
 import { INITIAL_STATE_SIGNIN, ISignIn } from '../../domain'
 import { SignInService } from '../../services'
 import { SIGNIN_VALIDATION } from '../../validations'
 
 const SignIn = () => {
+  const { isFetching } = useAppStateContext()
   const dispatchApp = useAppDispatchContext()
 
   const { params, errors, onInputChange, onSubmit } = useHandleForm(INITIAL_STATE_SIGNIN, SIGNIN_VALIDATION)
@@ -16,9 +18,7 @@ const SignIn = () => {
 
     const { error, user } = await SignInService.signIn(data)
 
-    if (error) {
-      console.log({ error })
-    }
+    if (error) showToast.error({ ...error })
 
     if (user) dispatchApp({ type: 'UserAuthenticated', payload: user })
 
@@ -55,7 +55,7 @@ const SignIn = () => {
             error={errors && errors.password}
           />
 
-          <Button type="submit">
+          <Button type="submit" disabled={isFetching}>
             <span>Iniciar sesión</span>
           </Button>
         </form>

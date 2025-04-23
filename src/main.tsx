@@ -13,14 +13,12 @@ const queryClient = new QueryClient()
 const container = document.getElementById('root') as HTMLElement
 
 if (!container.hasChildNodes()) {
-  console.log('🚀 renderizando app...')
-
   createRoot(container).render(
     <StrictMode>
       <BrowserRouter basename={meta.env.VITE_APP_BASENAME}>
         <Suspense fallback={<LoadingBar />}>
           <QueryClientProvider client={queryClient}>
-            <AppProvider>
+            <AppProvider defaultTheme="light">
               <App />
             </AppProvider>
           </QueryClientProvider>

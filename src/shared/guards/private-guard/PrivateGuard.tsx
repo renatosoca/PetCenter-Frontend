@@ -10,10 +10,10 @@ const PrivateGuard = ({ children }: PropsWithChildren) => {
   setStorage(STORAGE_NAMES.lastPage, window.location.pathname)
 
   return (
-    <div>
+    <>
       {!user && <Navigate to={ModuleAuthPages.signin} />}
       {user && children}
-    </div>
+    </>
   )
 }
 

@@ -5,23 +5,22 @@ import { cn } from '@/shared/utils'
 import { memo } from 'react'
 
 interface MenuItemProps {
-  active: boolean
-  pathname: string
+  active?: boolean
+  isSubMenu?: boolean
   href: string
   isOpen: boolean | undefined
   Icon: LucideIcon
   label: string
-  isSubMenu?: boolean
 }
 
-export const MenuItem = memo(({ active, pathname, href, isOpen, Icon, label, isSubMenu }: MenuItemProps) => {
+export const MenuItem = memo(({ active, href, isOpen, Icon, label, isSubMenu }: MenuItemProps) => {
   return (
     <Button
-      variant={(active === undefined && pathname.startsWith(href)) || active ? 'secondary' : 'ghost'}
-      className={cn('w-full justify-start h-10 mb-1', isSubMenu && 'pl-10')}
+      variant={active ? 'secondary' : 'ghost'}
+      className={cn('w-full justify-start h-10 mb-1 px-4 gap-0', isSubMenu && 'pl-8')}
       asChild>
       <Link to={href}>
-        <span className={cn(isOpen === false ? '' : 'mr-4', isSubMenu && 'mr-4 ml-2')}>
+        <span className={cn(isOpen ? 'mr-4' : '')}>
           <Icon size={18} />
         </span>
         <p

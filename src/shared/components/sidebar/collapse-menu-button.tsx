@@ -47,8 +47,8 @@ export const CollapseMenuButton = memo(({ icon: Icon, label, submenus, isOpen }:
       {isOpen && (
         <Collapsible open={isCollapsed} onOpenChange={setIsCollapsed} className="w-full">
           <CollapsibleTrigger className="[&[data-state=open]>div>div>svg]:rotate-180 mb-1" asChild>
-            <Button variant={isSubmenuActive ? 'secondary' : 'ghost'} className="w-full justify-start h-10">
-              <div className="w-full items-center flex justify-between">
+            <Button variant={isSubmenuActive ? 'secondary' : 'ghost'} className="w-full justify-start h-10 px-4">
+              <div className="w-full items-center flex justify-between h-full">
                 <div className="flex items-center">
                   <span className="mr-4">
                     <Icon size={18} />
@@ -73,16 +73,7 @@ export const CollapseMenuButton = memo(({ icon: Icon, label, submenus, isOpen }:
           </CollapsibleTrigger>
           <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
             {submenus.map(({ href, label, Icon, active }, index) => (
-              <MenuItem
-                key={index}
-                active={active!}
-                pathname={pathname}
-                href={href}
-                isOpen={isOpen}
-                Icon={Icon}
-                label={label}
-                isSubMenu
-              />
+              <MenuItem key={index} active={active} href={href} isOpen={isOpen} Icon={Icon} label={label} isSubMenu />
             ))}
           </CollapsibleContent>
         </Collapsible>
@@ -95,7 +86,9 @@ export const CollapseMenuButton = memo(({ icon: Icon, label, submenus, isOpen }:
             <Tooltip delayDuration={100}>
               <TooltipTrigger asChild>
                 <DropdownMenuTrigger asChild>
-                  <Button variant={isSubmenuActive ? 'secondary' : 'ghost'} className="w-full justify-start h-10 mb-1">
+                  <Button
+                    variant={isSubmenuActive ? 'secondary' : 'ghost'}
+                    className="w-full justify-start h-10 mb-1 px-4">
                     <div className="w-full items-center flex justify-between">
                       <div className="flex items-center">
                         <span className={cn(isOpen === false ? '' : 'mr-4')}>
@@ -114,6 +107,7 @@ export const CollapseMenuButton = memo(({ icon: Icon, label, submenus, isOpen }:
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+
           <DropdownMenuContent side="right" sideOffset={25} align="start">
             <DropdownMenuLabel className="max-w-[190px] truncate">{label}</DropdownMenuLabel>
             <DropdownMenuSeparator />

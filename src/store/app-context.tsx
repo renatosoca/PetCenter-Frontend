@@ -1,13 +1,17 @@
 import { PropsWithChildren, createContext, memo, useContext, useMemo, useReducer } from 'react'
-import { IAppState, INITIAL_STATE_APP } from '@/domain'
+import { IAppState, INITIAL_STATE_APP, TTheme } from '@/domain'
 import { TDispatchApp, appReducer } from './app-reducer'
 import { getStateAppPersistent } from '@/shared/utils'
 
 const AppStateContext = createContext<IAppState | undefined>(undefined)
 const AppDispatchContext = createContext<TDispatchApp | undefined>(undefined)
 
-const AppProvider = memo(({ children }: PropsWithChildren) => {
-  const initialState = useMemo(() => getStateAppPersistent(), [])
+interface AppProviderProps extends PropsWithChildren {
+  defaultTheme?: TTheme
+}
+
+const AppProvider = memo(({ children, defaultTheme }: AppProviderProps) => {
+  const initialState = useMemo(() => getStateAppPersistent(undefined, defaultTheme), [defaultTheme])
   const [state, dispatch] = useReducer(appReducer, INITIAL_STATE_APP, () => initialState)
 
   return (

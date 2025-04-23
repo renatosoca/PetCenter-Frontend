@@ -12,7 +12,7 @@ type RequestAxios<T = string> = {
 interface AxiosErrorResponse<T = string> {
   code: T
   title?: string
-  message: string
+  msg: string
   status?: number
 }
 
@@ -35,6 +35,7 @@ export class ErrorHandler<T> extends Error {
   }
 
   static fromAxiosError<T = string>({ error, code, message, title, status }: RequestAxios<T>): ErrorHandler<T> {
+    console.log(error)
     const err = error as AxiosError<AxiosErrorResponse<T>>
     const responseData = err.response?.data
     const responseStatus = err.response?.status || 500
@@ -42,7 +43,7 @@ export class ErrorHandler<T> extends Error {
     return new ErrorHandler<T>({
       code: (code || responseData?.code || err.code) as T,
       title: title || responseData?.title,
-      message: message || responseData?.message || err.message,
+      message: message || responseData?.msg || err.message,
       status: status || responseStatus
     })
   }

@@ -1,19 +1,21 @@
-import { IAppState, INITIAL_STATE_APP } from '@/domain'
+import { IAppState, INITIAL_STATE_APP, TTheme } from '@/domain'
 import { decodedToken } from './decoded-jwt.util'
 import { IResponseLogin } from '@/app/auth/domain'
 import { COOKIE_NAMES, getCookie } from './cookies.util'
+import { getStorage, STORAGE_NAMES } from './storage.util'
 
-export const getStateAppPersistent = (token?: string): IAppState => {
+export const getStateAppPersistent = (token?: string, defaultTheme: TTheme = 'system'): IAppState => {
   const data = token ?? getCookie(COOKIE_NAMES.auth)
+  const theme = (getStorage(STORAGE_NAMES.theme) as TTheme) || defaultTheme
 
-  if (!data) return INITIAL_STATE_APP
+  if (!data) return { ...INITIAL_STATE_APP, theme }
 
   const decoded = decodedToken<{ user: IResponseLogin }>(data)
 
-  if (!decoded?.user) return INITIAL_STATE_APP
+  if (!decoded?.user) return { ...INITIAL_STATE_APP, theme }
 
   const { user } = decoded
-  if (!user) return INITIAL_STATE_APP
+  if (!user) return { ...INITIAL_STATE_APP, theme }
 
   return {
     isFetching: false,
@@ -23,6 +25,7 @@ export const getStateAppPersistent = (token?: string): IAppState => {
       email: user.email,
       phone: user.phone
     },
+    theme,
     error: undefined
   }
 }

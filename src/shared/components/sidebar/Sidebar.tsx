@@ -25,16 +25,16 @@ export const Sidebar = () => {
       <div
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
-        className="relative h-full flex flex-col px-3 py-4 overflow-y-auto shadow-md dark:shadow-zinc-800">
+        className="relative h-full flex flex-col px-3 py-4 overflow-y-auto shadow-md dark:shadow-zinc-800 overflow-x-hidden">
         <Button
           className={cn(
-            'transition-transform ease-in-out duration-300 mb-1',
+            'transition-transform ease-in-out duration-300 px-4 py-2 h-9',
             !getOpenState() ? 'translate-x-1' : 'translate-x-0'
           )}
           variant="link"
           asChild>
           <Link to="/dashboard" className="flex items-center gap-2">
-            <PanelsTopLeft className="w-6 h-6 mr-1" />
+            <PanelsTopLeft className="mr-1 size-6" />
             <h1
               className={cn(
                 'font-bold text-lg whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300',

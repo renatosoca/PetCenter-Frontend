@@ -21,6 +21,7 @@ export const sidebarStore = create(
       isOpen: true,
       isHover: false,
       settings: { disabled: false, isHoverOpen: false },
+
       toggleSidebar: () => {
         set({ isOpen: !get().isOpen })
       },

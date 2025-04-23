@@ -13,7 +13,9 @@ const PatientModuleRoutes = () => {
       <ModuleLayout>
         <RouteWithNotFound>
           <Route path={ModulePatientRoute.home} element={<HomePage />} />
-          <Route path={ModulePatientRoute.home} element={<HomePage />} />
+          <Route path={ModulePatientRoute.profile} element={<HomePage />} />
+          <Route path={ModulePatientRoute.settings} element={<HomePage />} />
+          <Route path={ModulePatientRoute.example} element={<HomePage />} />
         </RouteWithNotFound>
       </ModuleLayout>
     </PrivateGuard>

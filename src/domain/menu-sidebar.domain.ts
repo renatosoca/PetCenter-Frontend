@@ -1,3 +1,4 @@
+import { PatientModulePages } from '@/app/patient/domain'
 import { Tag, Users, Settings, Bookmark, SquarePen, LayoutGrid, LucideIcon } from 'lucide-react'
 
 export interface Submenu {
@@ -23,10 +24,10 @@ export interface Group {
 export function getMenuList(): Group[] {
   return [
     {
-      groupLabel: 'Paciente',
+      groupLabel: '',
       menus: [
         {
-          href: '/patient',
+          href: PatientModulePages.home,
           label: 'Pacientes',
           icon: LayoutGrid,
           submenus: []
@@ -42,7 +43,7 @@ export function getMenuList(): Group[] {
           icon: SquarePen,
           submenus: [
             {
-              href: '/posts',
+              href: '/profile',
               label: 'All Posts',
               Icon: SquarePen
             },
@@ -69,13 +70,13 @@ export function getMenuList(): Group[] {
       groupLabel: 'Settings',
       menus: [
         {
-          href: '/users',
-          label: 'Users',
+          href: PatientModulePages.profile,
+          label: 'profile',
           icon: Users
         },
         {
-          href: '/account',
-          label: 'Account',
+          href: PatientModulePages.example,
+          label: 'example',
           icon: Settings
         }
       ]
