@@ -25,7 +25,7 @@ export const UserNav = () => {
         <Tooltip delayDuration={100}>
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="relative h-8 w-8 rounded-full">
+              <Button variant="outline" size="icon" className="relative h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="#" alt="Avatar" />
                   <AvatarFallback className="bg-transparent">JD</AvatarFallback>
