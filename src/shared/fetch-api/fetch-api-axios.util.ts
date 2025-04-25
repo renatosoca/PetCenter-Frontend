@@ -10,6 +10,10 @@ export class fetchApi {
     })
   }
 
+  getInstance() {
+    return this.api
+  }
+
   setInstance(instance: AxiosInstance) {
     this.api = instance
   }

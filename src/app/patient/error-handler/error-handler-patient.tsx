@@ -1,23 +1,17 @@
 import { IErrorPageInterface, IGetErrorPageInterface } from '@/domain'
+import { getGlobalErrorPage, globalErrorHandler } from '@/shared/global-error'
 
-export const getGlobalErrorPage = ({
+export const errorHandlerPatient = ({
   code,
   status,
   title,
   message,
   onClickCallback
 }: IGetErrorPageInterface): IErrorPageInterface => {
-  console.log({
-    code,
-    status,
-    title,
-    message,
-    onClickCallback
-  })
   switch (status) {
     case 401:
       switch (code) {
-        case 'not-jwt':
+        case 'get-patient-error':
           return {
             code,
             title: title || 'No tienes acceso a esta página',
@@ -30,12 +24,13 @@ export const getGlobalErrorPage = ({
       }
   }
 
-  return {
-    Icon: <></>,
-    title: 'Tenemos un problema con el sistema',
-    description: 'Estamos trabajando para solucionar este inconveniente. Por favor intente en otro momento.',
-    presentation: 'page',
-    primaryText: 'Volver a cargar',
-    primaryAction: () => onClickCallback({ buttonLabel: 'Try again' })
-  }
+  return getGlobalErrorPage({
+    code,
+    status,
+    title,
+    message,
+    onClickCallback
+  })
 }
+
+export const getErrorHandlerPatient = globalErrorHandler(errorHandlerPatient)

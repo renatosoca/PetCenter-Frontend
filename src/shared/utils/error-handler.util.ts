@@ -35,7 +35,6 @@ export class ErrorHandler<T> extends Error {
   }
 
   static fromAxiosError<T = string>({ error, code, message, title, status }: RequestAxios<T>): ErrorHandler<T> {
-    console.log(error)
     const err = error as AxiosError<AxiosErrorResponse<T>>
     const responseData = err.response?.data
     const responseStatus = err.response?.status || 500

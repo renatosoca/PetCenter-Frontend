@@ -27,6 +27,8 @@ export const globalErrorHandler = (errorPage: TErrorPageDetail): TGlobalErrorhan
         switch (status) {
           case 401:
             console.log('401 error')
+            dispatchApp({ type: 'ClearError' })
+            console.log('401 error')
             break
           case 403:
             console.log('403 error')

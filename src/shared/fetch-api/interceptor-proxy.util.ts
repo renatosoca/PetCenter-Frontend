@@ -1,9 +1,13 @@
 import { AxiosInstance } from 'axios'
+import { COOKIE_NAMES, getCookie } from '../utils'
 
 export const interceptorProxy = (axiosInstance: AxiosInstance) => {
   axiosInstance.interceptors.request.use(
     (config) => {
-      // Do something before request is sent
+      const token = getCookie(COOKIE_NAMES.auth)
+
+      if (token) config.headers.Authorization = `Bearer ${token}`
+
       return config
     },
     (error) => {

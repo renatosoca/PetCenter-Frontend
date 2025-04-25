@@ -5,9 +5,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { LoadingBar } from './shared/components'
 import { meta } from './meta.ts'
 import './index.css'
+import { interceptorProxy } from './shared/fetch-api/interceptor-proxy.util'
+import { petCenterApi } from './app.globals'
 
 const AppProvider = lazy(() => import('./store/app-context.tsx'))
 const App = lazy(() => import('./App'))
+
+interceptorProxy(petCenterApi.getInstance())
 
 const queryClient = new QueryClient()
 const container = document.getElementById('root') as HTMLElement
