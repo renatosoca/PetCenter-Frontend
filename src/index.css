@@ -128,17 +128,18 @@
 
   --radius-primary: 0.2rem;
 
-  /* --container-2xl: 1400px; */
+  --container-padding: 2rem;
+  --container-screen-2xl: 1400px;
 
   --animate-slide-fade: slide-fade 1s linear infinite;
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
   @keyframes slide-fade {
-    0% {
+    from {
       transform: translateX(-100%);
     }
-    100% {
+    to {
       transform: translateX(300%);
     }
   }
@@ -166,5 +167,14 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  .container {
+    @apply mx-auto px-[var(--container-padding)];
+  }
+
+  @media (min-width: var(--container-screen-2xl)) {
+    .container {
+      max-width: var(--container-screen-2xl);
+    }
   }
 }
