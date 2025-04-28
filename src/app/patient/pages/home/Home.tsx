@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/shared/components'
@@ -21,6 +20,7 @@ import { DataTable } from './data-table'
 const columns: ColumnDef<IPatient>[] = [
   {
     id: 'select',
+    accessorKey: 'id',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
@@ -39,10 +39,12 @@ const columns: ColumnDef<IPatient>[] = [
     enableHiding: false
   },
   {
+    id: 'Mascota',
     accessorKey: 'pet_name',
     header: 'Mascota'
   },
   {
+    id: 'Propietario',
     accessorKey: 'owner',
     header: ({ column }) => {
       return (
@@ -59,6 +61,7 @@ const columns: ColumnDef<IPatient>[] = [
     }
   },
   {
+    id: 'email',
     accessorKey: 'email',
     header: ({ column }) => {
       return (
@@ -75,15 +78,18 @@ const columns: ColumnDef<IPatient>[] = [
     }
   },
   {
+    id: 'fecha',
     accessorKey: 'created_date',
     header: 'Fecha'
   },
   {
+    id: 'síntomas',
     accessorKey: 'symptoms',
     header: 'Síntomas'
   },
   {
-    id: 'actions',
+    id: 'acciones',
+    accessorKey: 'actions',
     header: 'Acciones',
     cell: ({ row }) => {
       const patient = row.original
@@ -96,11 +102,9 @@ const columns: ColumnDef<IPatient>[] = [
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(patient.id)}>
-              Copy patient ID
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(patient.id)}>Editar</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>View customer</DropdownMenuItem>
             <DropdownMenuItem>View patient details</DropdownMenuItem>
@@ -116,7 +120,7 @@ const AdminHomePage = () => {
 
   const { data, error } = useQuery({
     queryKey: ['Patient'],
-    queryFn: () => HomeServices.getList({ page: 1, limit: 10 }),
+    queryFn: () => HomeServices.getList({ page: 1, limit: 20 }),
     staleTime: 1000 * 60 * 10,
     retry: 1
   })
